@@ -355,14 +355,9 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverToBoxAdapter(
             child: Provider.of<AppData>(context).productList != null?Container(
               height: MediaQuery.of(context).size.height,
-              child: GridView.builder(
+              child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0,
-                ),
                 itemCount: Provider.of<AppData>(context).productList!.length,
                 itemBuilder: (ctx, int index){
                   Product product = Provider.of<AppData>(context).productList![index];
@@ -371,6 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(context, PageTransition(child: ProductDetails(product: product,), type: PageTransitionType.rightToLeft));
                     },
                     child: Container(
+                      margin: EdgeInsets.only(bottom: 10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),
                         border: Border.all(
@@ -380,44 +376,79 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Column(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
                           children: [
                             Image.network(
                               "${ApiConstants.baseUrl}/images/products/${product.product_photo!}",
                               height: 150.0,
-                              width: double.infinity,
+                              width: 150.0,
                               fit: BoxFit.scaleDown,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    product.product_name!,
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.blueGrey,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                    color: Palette.accentColor
-                                  ),
-                                  child: Text(
-                                    "KES.${product.product_price!}",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w100,
-                                        color: Colors.redAccent
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text(
+                                      product.product_name!,
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.blueGrey,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text(
+                                      product.product_description!,
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w200,
+                                        color: Palette.textColor1,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          product.product_quantity!,
+                                          style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: Palette.primaryColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(25.0),
+                                          color: Palette.accentColor
+                                        ),
+                                        child: Text(
+                                          "KES.${product.product_price!}",
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w100,
+                                              color: Colors.redAccent
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
