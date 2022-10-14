@@ -23,6 +23,25 @@ class AssistantMethods {
     }
   }
 
+  static getProductsByCategory(context, String category_id) async{
+    var params = {
+      'getProductsByCategory': '1',
+      'category_id': '${category_id}',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    if(response != "failed"){
+      final items = response.cast<Map<String, dynamic>>();
+
+      List<Product> products = items.map<Product>((json) {
+        return Product.fromJson(json);
+      }).toList();
+
+      Provider.of<AppData>(context, listen: false).updateCategoryProductsList(products);
+    }
+  }
+
   static getTopProducts(context) async{
     var params = {
       'getTopProducts': '1',
