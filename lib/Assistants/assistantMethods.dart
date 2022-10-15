@@ -19,14 +19,32 @@ class AssistantMethods {
     var response = await RequestAssistant.getRequest(params);
 
     if(response.toString() != "failed" && response.toString() != "NOT_REGISTERED" && response.toString() != "PASSWORD_NOT_MATCHED"){
-      final items = response.cast<Map<String, dynamic>>();
 
-      User user = User.fromJson(items);
+      User user = User.fromJson(response);
 
       Provider.of<AppData>(context, listen: false).updateUser(user);
       data = "LOGGED_IN";
     }else{
       data = response.toString();
+    }
+    return data;
+  }
+
+  static Future<String> addItemToCart(context, String userid, String productid, String productquantity) async{
+    String data = "";
+    var params = {
+      'addItemToCart': '1',
+      'userid': '${userid}',
+      'productid': '${productid}',
+      'productquantity': '${productquantity}',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    if(response != "failed"){
+      data = response.toString();
+    }else{
+      data = "failed";
     }
     return data;
   }

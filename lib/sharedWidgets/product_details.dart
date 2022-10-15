@@ -4,9 +4,14 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+import 'package:vege_food/Assistants/assistantMethods.dart';
+import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/product.dart';
+import 'package:vege_food/Models/user.dart';
 import 'package:vege_food/auth/auth.dart';
+import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -24,6 +29,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   int _itemsCount = 1;
   double _totalPrice = 0;
+  bool isAddingItemsToCart = false;
 
   @override
   void initState() {
@@ -218,8 +224,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                     right: 12.0,
                     left: 12.0,
                     child: InkWell(
-                      onTap: (){
-                        Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
+                      onTap: Provider.of<AppData>(context).user == null?() async {
+                        String res = await Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
+                        if(res == "LOGGED_IN"){
+                          addItemsToCart();
+                        }
+                      }:() async {
+                        addItemsToCart();
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 12.0),
@@ -264,5 +275,15 @@ class _ProductDetailsState extends State<ProductDetails> {
         ],
       ),
     );
+  }
+
+  Future<void> addItemsToCart() async {
+    User user = Provider.of<AppData>(context, listen: false).user!;
+    String res = await AssistantMethods.addItemToCart(context, user.id!.toString(), widget.product.id!.toString(), _itemsCount.toString());
+    if(res == "SUCCESSFULLY_ADDED"){
+      Navigator.pop(context);
+    }else{
+      displayToastMessage("An error occurred. Please try again later.", context);
+    }
   }
 }

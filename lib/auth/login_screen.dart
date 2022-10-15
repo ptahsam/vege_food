@@ -207,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 password.clear();
                               });
                             }else if(response == "LOGGED_IN"){
-                              Navigator.pop(context);
+                              Navigator.pop(context, "LOGGED_IN");
                             }else{
                               setState(() {
                                 isLoggingIn = false;
