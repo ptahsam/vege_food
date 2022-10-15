@@ -18,6 +18,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
 
+  bool isRegistering = false;
+  String responseMessage = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,10 +211,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
+                    responseMessage != ""?Padding(
+                      padding: const EdgeInsets.only(top: 10,),
+                      child: Center(
+                        child: Text(
+                          responseMessage,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                    ):SizedBox.shrink(),
                     InkWell(
-                      onTap: (){
+                      onTap: () async {
                         if(identifier.text.isNotEmpty && password.text.isNotEmpty && confirmPassword.text.isNotEmpty){
-                          processUserReistration();
+                          if(password.text == confirmPassword.text){
+                            setState(() {
+                              isRegistering = true;
+                            });
+                            String response = await AssistantMethods.registerUser(context, identifier.text, password.text);
+                            if(response == "USER_ALREADY_EXISTS"){
+                              setState(() {
+                                responseMessage = "An account with similar details already exists. Try to login";
+                                isRegistering = false;
+                              });
+                            }else if(response == "UNKNOWN_ERROR" || response == "failed"){
+                              setState(() {
+                                responseMessage = "An error occurred. Please try again later.";
+                                isRegistering = false;
+                              });
+                            }else{
+                              Navigator.pop(context);
+                            }
+                            //displayToastMessage(response, context);
+                          }else{
+                            displayToastMessage("Confirm password is incorrect", context);
+                          }
                         }else{
                           displayToastMessage("Enter all fields", context);
                         }
@@ -219,11 +256,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.2, vertical: 10.0),
                         decoration: BoxDecoration(
-                          color: Palette.primaryColor,
+                          color: isRegistering?Palette.primaryColor.withOpacity(0.7):Palette.primaryColor,
                           borderRadius: BorderRadius.circular(25.0),
                         ),
                         child: Text(
-                          "Register",
+                          "${isRegistering?"Registering...":"Register"}",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
@@ -298,14 +335,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
-  }
-
-  void processUserReistration() async{
-    if(password.text == confirmPassword.text){
-      String response = await AssistantMethods.registerUser(context, identifier.text, password.text);
-      displayToastMessage(response, context);
-    }else{
-      displayToastMessage("Confirm password is incorrect", context);
-    }
   }
 }

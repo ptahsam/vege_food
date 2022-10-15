@@ -12,7 +12,7 @@ class AssistantMethods {
     var params = {
       'registerUser': '1',
       'identifier': '${identifier}',
-      'password': '${password}'
+      'password': '${password}',
     };
 
     var response = await RequestAssistant.getRequest(params);
