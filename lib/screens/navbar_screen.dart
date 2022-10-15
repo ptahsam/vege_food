@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/screens/screens.dart';
 
@@ -28,6 +29,12 @@ class _NavBarScreenState extends State<NavBarScreen> {
   ];
 
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

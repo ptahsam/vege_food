@@ -3,8 +3,10 @@ import 'dart:ffi';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/product.dart';
+import 'package:vege_food/auth/auth.dart';
 import 'package:vege_food/config/palette.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -215,30 +217,43 @@ class _ProductDetailsState extends State<ProductDetails> {
                     bottom: 100.0,
                     right: 12.0,
                     left: 12.0,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 12.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.0),
-                        color: Palette.primaryColor,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.shopping_cart,
-                            color: Colors.white,
-                            size: 26.0,
-                          ),
-                          SizedBox(width: 15.0,),
-                          Text(
-                            "Add for KES. ${_totalPrice}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 22.0,
-                              color: Colors.white,
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 12.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: Palette.primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Palette.textColor1.withOpacity(0.6),
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                              offset: Offset(0, 1), // changes position of shadow
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.shopping_cart,
+                              color: Colors.white,
+                              size: 26.0,
+                            ),
+                            SizedBox(width: 15.0,),
+                            Text(
+                              "Add for KES. ${_totalPrice}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 22.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
