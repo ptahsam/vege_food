@@ -123,8 +123,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 20),
                       child: TextField(
+                        obscureText: true,
                         decoration: InputDecoration(
-                          hintText: 'Enter phone/email',
+                          hintText: 'Enter password',
                           hintStyle: TextStyle(
                             color: Palette.black6,
                           ),
