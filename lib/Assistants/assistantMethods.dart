@@ -7,6 +7,24 @@ import 'package:vege_food/Models/category.dart';
 import 'package:vege_food/Models/product.dart';
 
 class AssistantMethods {
+  static Future<String> registerUser(context, String identifier, String password) async{
+    String data = "";
+    var params = {
+      'registerUser': '1',
+      'identifier': '${identifier}',
+      'password': '${password}'
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    if(response != "failed"){
+      data = response.toString();
+    }else{
+      data = "failed";
+    }
+    return data;
+  }
+
   static getAllProducts(context) async{
     var params = {
       'getProducts': '1',

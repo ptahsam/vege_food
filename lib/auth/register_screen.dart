@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/auth/login_screen.dart';
+import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -11,6 +13,11 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
+  TextEditingController identifier = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,6 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: TextField(
+                        controller: identifier,
                         decoration: InputDecoration(
                           hintText: 'Enter phone/email',
                           hintStyle: TextStyle(
@@ -127,6 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0,),
                       child: TextField(
+                        controller: password,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Enter password',
@@ -164,6 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 20),
                       child: TextField(
+                        controller: confirmPassword,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Confirm password',
@@ -198,18 +208,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.2, vertical: 10.0),
-                      decoration: BoxDecoration(
-                        color: Palette.primaryColor,
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      child: Text(
-                        "Register",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20.0,
+                    InkWell(
+                      onTap: (){
+                        if(identifier.text.isNotEmpty && password.text.isNotEmpty && confirmPassword.text.isNotEmpty){
+                          processUserReistration();
+                        }else{
+                          displayToastMessage("Enter all fields", context);
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.2, vertical: 10.0),
+                        decoration: BoxDecoration(
+                          color: Palette.primaryColor,
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        child: Text(
+                          "Register",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20.0,
+                          ),
                         ),
                       ),
                     ),
@@ -279,5 +298,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void processUserReistration() async{
+    if(password.text == confirmPassword.text){
+      String response = await AssistantMethods.registerUser(context, identifier.text, password.text);
+      displayToastMessage(response, context);
+    }else{
+      displayToastMessage("Confirm password is incorrect", context);
+    }
   }
 }
