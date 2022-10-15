@@ -18,7 +18,7 @@ class AssistantMethods {
 
     var response = await RequestAssistant.getRequest(params);
 
-    if(response != "failed" || response != "NOT_REGISTERED" || response != "PASSWORD_NOT_MATCHED"){
+    if(response.toString() != "failed" && response.toString() != "NOT_REGISTERED" && response.toString() != "PASSWORD_NOT_MATCHED"){
       final items = response.cast<Map<String, dynamic>>();
 
       User user = User.fromJson(items);
