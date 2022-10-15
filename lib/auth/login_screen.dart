@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/auth/auth.dart';
+import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/sharedWidgets/widgets.dart';
 
@@ -13,6 +15,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  TextEditingController identifier = TextEditingController();
+  TextEditingController password = TextEditingController();
+  bool isLoggingIn = false;
+  String responseMessage = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: TextField(
+                          controller: identifier,
                           decoration: InputDecoration(
                             hintText: 'Enter phone/email',
                             hintStyle: TextStyle(
@@ -127,8 +136,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 10),
                         child: TextField(
+                          controller: password,
                           obscureText: true,
                           decoration: InputDecoration(
                             hintText: 'Enter password',
@@ -163,18 +173,64 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.2, vertical: 10.0),
-                        decoration: BoxDecoration(
-                          color: Palette.primaryColor,
-                          borderRadius: BorderRadius.circular(25.0),
+                      responseMessage != ""?Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Center(
+                          child: Text(
+                            responseMessage,
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                            ),
+                          ),
                         ),
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20.0,
+                      ):SizedBox(height: 10.0,),
+                      InkWell(
+                        onTap: () async {
+                          if(identifier.text.isNotEmpty && password.text.isNotEmpty){
+                            setState(() {
+                              isLoggingIn = true;
+                            });
+                            String response = await AssistantMethods.loginUser(context, identifier.text, password.text);
+                            if(response == "NOT_REGISTERED"){
+                              setState(() {
+                                responseMessage = "No account found for the details. Signup first then Login.";
+                                isLoggingIn = false;
+                                identifier.clear();
+                                password.clear();
+                              });
+                            }else if(response == "PASSWORD_NOT_MATCHED"){
+                              setState(() {
+                                responseMessage = "Incorrect Password. Enter correct password";
+                                isLoggingIn = false;
+                                password.clear();
+                              });
+                            }else if(response == "LOGGED_IN"){
+                              Navigator.pop(context);
+                            }else{
+                              setState(() {
+                                isLoggingIn = false;
+                              });
+                              displayToastMessage("An error occurred. Please try again later.", context);
+                            }
+                          }else{
+                            displayToastMessage("Enter all fields", context);
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.2, vertical: 10.0),
+                          decoration: BoxDecoration(
+                            color: Palette.primaryColor,
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          child: Text(
+                            "${isLoggingIn?"Logging in...":"Login"}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20.0,
+                            ),
                           ),
                         ),
                       ),

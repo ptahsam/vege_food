@@ -174,7 +174,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                       child: TextField(
                         controller: confirmPassword,
                         obscureText: true,
@@ -212,7 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     responseMessage != ""?Padding(
-                      padding: const EdgeInsets.only(top: 10,),
+                      padding: const EdgeInsets.only(bottom: 10.0),
                       child: Center(
                         child: Text(
                           responseMessage,
@@ -223,7 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-                    ):SizedBox.shrink(),
+                    ):SizedBox(height: 10.0,),
                     InkWell(
                       onTap: () async {
                         if(identifier.text.isNotEmpty && password.text.isNotEmpty && confirmPassword.text.isNotEmpty){
@@ -239,9 +239,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               });
                             }else if(response == "UNKNOWN_ERROR" || response == "failed"){
                               setState(() {
-                                responseMessage = "An error occurred. Please try again later.";
                                 isRegistering = false;
                               });
+                              displayToastMessage("An error occurred. Please try again later.", context);
                             }else{
                               Navigator.pop(context);
                             }
