@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:vege_food/auth/auth.dart';
 import 'package:vege_food/config/palette.dart';
+import 'package:vege_food/sharedWidgets/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -220,12 +223,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(width: 5.0,),
-                    Text(
-                      "Sign In",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Palette.primaryColor,
-                        fontSize: 20.0,
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, PageTransition(child: RegisterScreen(), type: PageTransitionType.rightToLeft));
+                      },
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Palette.primaryColor,
+                          fontSize: 20.0,
+                        ),
                       ),
                     ),
                   ],
