@@ -7,9 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/Models/apiConstants.dart';
+import 'package:vege_food/Models/cart.dart';
 import 'package:vege_food/Models/category.dart';
 import 'package:vege_food/Models/product.dart';
+import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
+import 'package:vege_food/sharedWidgets/cart_details.dart';
 import 'package:vege_food/sharedWidgets/category_items.dart';
 import 'package:vege_food/sharedWidgets/product_details.dart';
 import 'package:vege_food/sharedWidgets/single_product_card.dart';
@@ -25,16 +28,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> categories = [];
 
-
-
+  @override
+  void didUpdateWidget(covariant HomeScreen oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    getCartItems();
+    getUserData();
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getUserData();
     AssistantMethods.getAllProducts(context);
     AssistantMethods.getAllCategories(context);
     AssistantMethods.getTopProducts(context);
+    getCartItems();
+  }
+
+  getUserData() async{
+    Future.delayed(Duration.zero,()
+    async {
+      AssistantMethods.getUserData(context, await getUserId());
+    });
+  }
+
+  getCartItems() async{
+      AssistantMethods.getUserCartItems(context, await getUserId());
   }
 
   @override
@@ -67,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(8.0),
                 margin: EdgeInsets.only(right: 15.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -79,17 +100,43 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Palette.primaryColor,
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(10.0),
-                margin: EdgeInsets.only(right: 12.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.shopping_cart,
-                  size: 28.0,
-                  color: Palette.primaryColor,
+              InkWell(
+                onTap: (){
+                  Navigator.push(context, PageTransition(child: CartDetails(), type: PageTransitionType.rightToLeft));
+                },
+                child: Stack(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8.0),
+                      margin: EdgeInsets.only(right: 12.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.shopping_cart,
+                        size: 28.0,
+                        color: Palette.primaryColor,
+                      ),
+                    ),
+                    Positioned(
+                      right: 5.0,
+                      top: 0,
+                      child: Provider.of<AppData>(context).userCart != null?Container(
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                        child: Center(
+                          child: Text(
+                            getTotalCartItems(Provider.of<AppData>(context).userCart!),
+                          ),
+                        ),
+                      ):SizedBox.shrink(),
+                    ),
+                  ],
                 ),
               ),
             ],

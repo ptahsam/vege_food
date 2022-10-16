@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
+import 'package:vege_food/DataHandler/appdata.dart';
+import 'package:vege_food/Models/user.dart';
 import 'package:vege_food/auth/auth.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
@@ -28,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
         leading: InkWell(
           onTap: (){
-            Navigator.pop(context);
+            Navigator.pop(context, "");
           },
           child: Icon(
             Icons.close,
@@ -68,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Center(
                     child: Text(
                       "Manage your orders, edit your cart, \nreceive notifications and more.",
+                      textAlign: TextAlign.center,
                       maxLines: 2,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -207,6 +211,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 password.clear();
                               });
                             }else if(response == "LOGGED_IN"){
+                              User user = Provider.of<AppData>(context, listen: false).user!;
+                              saveUserId(user.id!.toString());
                               Navigator.pop(context, "LOGGED_IN");
                             }else{
                               setState(() {

@@ -282,6 +282,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     String res = await AssistantMethods.addItemToCart(context, user.id!.toString(), widget.product.id!.toString(), _itemsCount.toString());
     if(res == "SUCCESSFULLY_ADDED"){
       Navigator.pop(context);
+      AssistantMethods.getUserCartItems(context, user.id!.toString());
     }else{
       displayToastMessage("An error occurred. Please try again later.", context);
     }

@@ -68,6 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Center(
                   child: Text(
                     "Create a profile, shop for groceries, \nmake orders and more.",
+                    textAlign: TextAlign.center,
                     maxLines: 2,
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
