@@ -6,6 +6,7 @@ import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/cart.dart';
+import 'package:vege_food/Models/user.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 
@@ -41,6 +42,9 @@ class _CartDetailsState extends State<CartDetails> {
         ),
         title: Text(
           "Edit Cart",
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         actions: [
           Provider.of<AppData>(context).userCart != null?Container(
@@ -53,6 +57,7 @@ class _CartDetailsState extends State<CartDetails> {
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w400,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -218,28 +223,40 @@ class _CartDetailsState extends State<CartDetails> {
                       ),
                     ),
                     SizedBox(height: 10.0,),
-                    Container(
-                      width: (MediaQuery.of(context).size.width) - 24,
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.0),
-                        color: Palette.primaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Palette.textColor1.withOpacity(0.6),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: Offset(0, 1), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Place Order",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20.0,
-                            color: Colors.white,
+                    InkWell(
+                      onTap: () async {
+                        User user = Provider.of<AppData>(context, listen: false).user!;
+                        String res = await AssistantMethods.addNewOrder(context, user.id!.toString());
+                        if(res == "SUCCESSFULLY_ADDED"){
+                          AssistantMethods.getUserCartItems(context, user.id!.toString());
+                          Navigator.pop(context);
+                        }else{
+                          displayToastMessage("An error occurred. Please try again later", context);
+                        }
+                      },
+                      child: Container(
+                        width: (MediaQuery.of(context).size.width) - 24,
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          color: Palette.primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Palette.textColor1.withOpacity(0.6),
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                              offset: Offset(0, 1), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Place Order",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20.0,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

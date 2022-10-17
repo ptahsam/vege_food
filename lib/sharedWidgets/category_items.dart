@@ -60,6 +60,9 @@ class _CategoryItemsState extends State<CategoryItems> {
         ),
         title: Text(
           widget.category.category_name!,
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         centerTitle: false,
         flexibleSpace: FlexibleSpaceBar(

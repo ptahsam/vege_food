@@ -1,4 +1,6 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
@@ -41,8 +43,152 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leadingWidth: 0,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.transparent,
         title: Text(
           Provider.of<AppData>(context).user!.user_name!,
+        ),
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        child: Column(
+          children: [
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(60.0),
+                child: Image.asset(
+                  "images/profile.jpg",
+                  height: 100.0,
+                  width: 100.0,
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 40.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.user,
+                        color: Palette.black6,
+                        size: 24.0,
+                      ),
+                      SizedBox(width: 10.0,),
+                      Text(
+                        "Personal Information",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                            color: Palette.black6
+                        ),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                    size: 28.0,
+                    color: Palette.black6,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.noteSticky,
+                        color: Palette.black6,
+                        size: 24.0,
+                      ),
+                      SizedBox(width: 10.0,),
+                      Text(
+                        "Order Information",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                            color: Palette.black6
+                        ),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                    size: 28.0,
+                    color: Palette.black6,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.cog,
+                        color: Palette.black6,
+                        size: 24.0,
+                      ),
+                      SizedBox(width: 10.0,),
+                      Text(
+                        "Settings",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                            color: Palette.black6
+                        ),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                    size: 28.0,
+                    color: Palette.black6,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.info,
+                        color: Palette.black6,
+                        size: 24.0,
+                      ),
+                      SizedBox(width: 10.0,),
+                      Text(
+                        "About",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                            color: Palette.black6
+                        ),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                    size: 28.0,
+                    color: Palette.black6,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     ):Scaffold(

@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
     getCartItems();
+    getOrderItems();
     getUserData();
   }
 
@@ -44,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     AssistantMethods.getAllProducts(context);
     AssistantMethods.getAllCategories(context);
     AssistantMethods.getTopProducts(context);
+    getOrderItems();
     getCartItems();
   }
 
@@ -56,6 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getCartItems() async{
       AssistantMethods.getUserCartItems(context, await getUserId());
+  }
+
+  getOrderItems() async{
+    AssistantMethods.getUserOrderItems(context, await getUserId());
   }
 
   @override
@@ -71,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.w900,
                 fontSize: 20.0,
+                color: Colors.white,
               ),
             ),
             actions: [
@@ -87,18 +94,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Palette.primaryColor,
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(8.0),
-                margin: EdgeInsets.only(right: 15.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.shopping_basket,
-                  size: 28.0,
-                  color: Palette.primaryColor,
-                ),
+              Stack(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.only(right: 15.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.shopping_basket,
+                      size: 28.0,
+                      color: Palette.primaryColor,
+                    ),
+                  ),
+                  Positioned(
+                    right: 5.0,
+                    top: 0,
+                    child: Provider.of<AppData>(context).userOrder != null?Container(
+                      height: 25,
+                      width: 25,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.red,
+                      ),
+                      child: Center(
+                        child: Text(
+                          Provider.of<AppData>(context).userOrder!.length.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ):SizedBox.shrink(),
+                  ),
+                ],
               ),
               InkWell(
                 onTap: (){
@@ -132,6 +163,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Center(
                           child: Text(
                             getTotalCartItems(Provider.of<AppData>(context).userCart!),
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ):SizedBox.shrink(),

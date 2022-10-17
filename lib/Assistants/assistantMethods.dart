@@ -5,10 +5,27 @@ import 'package:vege_food/Assistants/requestAssistant.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/Models/cart.dart';
 import 'package:vege_food/Models/category.dart';
+import 'package:vege_food/Models/orderItem.dart';
+import 'package:vege_food/Models/orders.dart';
 import 'package:vege_food/Models/product.dart';
 import 'package:vege_food/Models/user.dart';
 
 class AssistantMethods {
+
+  static Future<String> addNewOrder(context, String userid) async{
+    String data = "";
+    var params = {
+      'addNewOrder': '1',
+      'userid': '${userid}',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    data = response.toString();
+
+    return data;
+  }
+
   static getUserData(context, String userid) async{
     var params = {
       'getUserData': '1',
@@ -100,6 +117,51 @@ class AssistantMethods {
       data = "failed";
     }
     return data;
+  }
+
+  static getOrderItems(context, String order_no) async {
+    var params = {
+      'getOrderItems': '1',
+      'order_no': '${order_no}',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    if(response != "failed" && response != "NO_DATA"){
+      final items = response.cast<Map<String, dynamic>>();
+
+      List<OrderItem> orderItem = items.map<OrderItem>((json) {
+        return OrderItem.fromJson(json);
+      }).toList();
+
+      Provider.of<AppData>(context, listen: false).updateOrderItem(orderItem);
+    }else if(response == "NO_DATA"){
+      List<OrderItem> orderItem = [];
+      Provider.of<AppData>(context, listen: false).updateOrderItem(orderItem);
+    }
+  }
+
+
+  static getUserOrderItems(context, String userid) async{
+    var params = {
+      'getUserOrders': '1',
+      'userid': '${userid}',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    if(response != "failed" && response != "NO_DATA"){
+      final items = response.cast<Map<String, dynamic>>();
+
+      List<Order> order = items.map<Order>((json) {
+        return Order.fromJson(json);
+      }).toList();
+
+      Provider.of<AppData>(context, listen: false).updateUserOrder(order);
+    }else if(response == "NO_DATA"){
+      List<Order> order = [];
+      Provider.of<AppData>(context, listen: false).updateUserOrder(order);
+    }
   }
 
   static getUserCartItems(context, String userid) async{

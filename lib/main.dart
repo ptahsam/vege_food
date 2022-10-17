@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
+import 'package:vege_food/config/colorMap.dart';
 import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/screens/navbar_screen.dart';
 void main() {
@@ -22,7 +23,13 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'VegeFood',
             theme: ThemeData(
-              primarySwatch: Colors.green,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              primarySwatch: MaterialColor(0xFF2DCE89, color),
+              textTheme:
+              Theme.of(context).textTheme.apply(
+                bodyColor: Colors.black, //<-- SEE HERE
+                displayColor: Colors.black, //<-- SEE HERE
+              ),
             ),
             home: const NavBarScreen(),
             debugShowCheckedModeBanner: false,

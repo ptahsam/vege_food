@@ -66,7 +66,9 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
             title: Text(
               "${widget.product.productCategory!.category_name!} > ${widget.product.product_name!}",
-
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
             centerTitle: false,
             floating: true,
