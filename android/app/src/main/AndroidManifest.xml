@@ -1,9 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vegefood.com.vege_food">
    <application
-        android:label="vege_food"
+        android:label="VegeFood"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+       android:icon="@mipmap/launcher_icon"
+       android:largeHeap="true"
+       android:usesCleartextTraffic="true"
+       android:requestLegacyExternalStorage="true"
+       android:allowBackup="false"
+       >
         <activity
             android:name=".MainActivity"
             android:exported="true"

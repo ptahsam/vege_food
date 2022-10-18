@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            pinned: true,
+            pinned: false,
             floating: true,
             title: Text(
               "VegeFood",
@@ -438,24 +438,23 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          SliverToBoxAdapter(
-            child: Provider.of<AppData>(context).productList != null?Container(
-              height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
-                itemCount: Provider.of<AppData>(context).productList!.length,
-                itemBuilder: (ctx, int index){
-                  Product product = Provider.of<AppData>(context).productList![index];
-                  return InkWell(
-                    onTap: (){
-                      Navigator.push(context, PageTransition(child: ProductDetails(product: product,), type: PageTransitionType.rightToLeft));
-                    },
-                    child: SingleProductCard(product: product,),
-                  );
+          Provider.of<AppData>(context).productList != null?SliverAnimatedList(
+            //padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
+            initialItemCount: Provider.of<AppData>(context).productList!.length,
+            itemBuilder: (ctx, int index, Animation){
+              Product product = Provider.of<AppData>(context).productList![index];
+              return InkWell(
+                onTap: (){
+                  Navigator.push(context, PageTransition(child: ProductDetails(product: product,), type: PageTransitionType.rightToLeft));
                 },
-              ),
-            ):Align(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 12.0, right: 12.0, top: index == 0?20.0:0.0, bottom: index == (Provider.of<AppData>(context).productList!.length - 1)?20.0:0.0),
+                  child: SingleProductCard(product: product,),
+                ),
+              );
+            },
+          ):SliverToBoxAdapter(
+            child: Align(
               alignment: Alignment.center,
               child: Center(
                 child: CircularProgressIndicator(),
