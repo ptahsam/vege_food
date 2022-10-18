@@ -330,12 +330,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              product.product_name!,
-                                              style: TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.blueGrey,
+                                            Expanded(
+                                              child: Text(
+                                                product.product_name!,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.blueGrey,
+                                                ),
                                               ),
                                             ),
                                             Text(

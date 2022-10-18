@@ -137,12 +137,13 @@ class _OrderDataState extends State<OrderData> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    AssistantMethods.getOrderItems(context, widget.order.order_refno!.toString());
+    //AssistantMethods.getOrderItems(context, widget.order.order_refno!.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 10.0),
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       decoration: BoxDecoration(
         color: Palette.accentColor,
@@ -193,8 +194,7 @@ class _OrderDataState extends State<OrderData> {
                   ),
                 ),
                 Text(
-                  Provider.of<AppData>(context).orderItem != null?
-                  '${getTotalOrderItems(Provider.of<AppData>(context).orderItem!)}':"",
+                  getTotalOrderItems(widget.order.listOrderItems!),
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 20.0,
@@ -218,8 +218,7 @@ class _OrderDataState extends State<OrderData> {
                   ),
                 ),
                 Text(
-                  Provider.of<AppData>(context).orderItem != null?
-                  'KES. ${getTotalOrderAmount(Provider.of<AppData>(context).orderItem!)}.00':"",
+                  'KES. ${getTotalOrderAmount(widget.order.listOrderItems!)}.00',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 20.0,
@@ -231,7 +230,7 @@ class _OrderDataState extends State<OrderData> {
           ),
           InkWell(
             onTap: (){
-              List<OrderItem> items = Provider.of<AppData>(context, listen: false).orderItem!;
+              List<OrderItem> items = widget.order.listOrderItems!;
               Navigator.push(context, PageTransition(child: ViewOrder(order: widget.order, item: items), type: PageTransitionType.rightToLeft));
             },
             child: Container(

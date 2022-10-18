@@ -119,7 +119,8 @@ class AssistantMethods {
     return data;
   }
 
-  static getOrderItems(context, String order_no) async {
+  static Future<List<OrderItem>> getOrderItems(String order_no) async {
+    List<OrderItem> orderItems = [];
     var params = {
       'getOrderItems': '1',
       'order_no': '${order_no}',
@@ -134,15 +135,17 @@ class AssistantMethods {
         return OrderItem.fromJson(json);
       }).toList();
 
-      Provider.of<AppData>(context, listen: false).updateOrderItem(orderItem);
+      orderItems = orderItem;
+
     }else if(response == "NO_DATA"){
-      List<OrderItem> orderItem = [];
-      Provider.of<AppData>(context, listen: false).updateOrderItem(orderItem);
+      orderItems = [];
     }
+    return orderItems;
   }
 
 
   static getUserOrderItems(context, String userid) async{
+    List<Order> listOrders = [];
     var params = {
       'getUserOrders': '1',
       'userid': '${userid}',
@@ -157,7 +160,13 @@ class AssistantMethods {
         return Order.fromJson(json);
       }).toList();
 
-      Provider.of<AppData>(context, listen: false).updateUserOrder(order);
+      for(var i = 0; i < order.length; i++){
+        Order o = order[i];
+        o.listOrderItems = await getOrderItems(o.order_refno!);
+        listOrders.add(o);
+      }
+
+      Provider.of<AppData>(context, listen: false).updateUserOrder(listOrders);
     }else if(response == "NO_DATA"){
       List<Order> order = [];
       Provider.of<AppData>(context, listen: false).updateUserOrder(order);

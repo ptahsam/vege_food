@@ -1,17 +1,21 @@
+import 'package:vege_food/Models/orderItem.dart';
+
 class Order {
   int? id;
   String? order_refno;
   int? payment_id;
+  List<OrderItem>? listOrderItems;
   String? date_added;
 
-  Order({this.id, this.order_refno, this.payment_id, this.date_added});
+  Order({this.id, this.order_refno, this.payment_id, this.listOrderItems, this.date_added});
 
-  factory Order.fromJson(Map<String, dynamic> json) {
+  factory Order.fromJson(Map<String, dynamic> jsonOrder) {
+
     return Order(
-      id: json['id'],
-      order_refno: json['order_refno'],
-      payment_id: json['payment_id'],
-      date_added: json['date_added'],
+      id: jsonOrder['id'],
+      order_refno: jsonOrder['order_refno'],
+      payment_id: jsonOrder['payment_id'],
+      date_added: jsonOrder['date_added'],
     );
   }
 }
