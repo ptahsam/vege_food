@@ -45,6 +45,7 @@ dependencies:
   shared_preferences: ^2.0.15
   fluttertoast: ^8.1.1
   intl: ^0.17.0
+  flutter_launcher_icons: ^0.10.0
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +60,12 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "images/logo.png"
 
 # The following section is specific to Flutter packages.
 flutter:
