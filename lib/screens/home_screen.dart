@@ -88,9 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     padding: EdgeInsets.all(8.0),
-                    margin: EdgeInsets.only(right: 15.0),
+                    margin: EdgeInsets.only(right: 15.0, top: 10.0),
                     decoration: BoxDecoration(
-                      color: Palette.primaryColor,
+                      color: Colors.white,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -105,9 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     padding: EdgeInsets.all(8.0),
-                    margin: EdgeInsets.only(right: 15.0),
+                    margin: EdgeInsets.only(right: 15.0, top: 10.0),
                     decoration: BoxDecoration(
-                      color: Palette.primaryColor,
+                      color: Colors.white,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -146,9 +146,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Container(
                       padding: EdgeInsets.all(8.0),
-                      margin: EdgeInsets.only(right: 12.0),
+                      margin: EdgeInsets.only(right: 12.0, top: 10.0),
                       decoration: BoxDecoration(
-                        color: Palette.primaryColor,
+                        color: Colors.white,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
