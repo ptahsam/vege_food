@@ -54,6 +54,9 @@ class AssistantMethods {
       User user = User.fromJson(response);
 
       Provider.of<AppData>(context, listen: false).updateUser(user);
+    }else{
+      User user = User();
+      Provider.of<AppData>(context, listen: false).updateUser(user);
     }
   }
 

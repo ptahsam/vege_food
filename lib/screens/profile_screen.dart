@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/auth/auth.dart';
+import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/sharedWidgets/personal_info.dart';
 
@@ -52,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
         child: Column(
           children: [
             Center(
@@ -192,6 +194,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: Palette.black6,
                   ),
                 ],
+              ),
+            ),
+            InkWell(
+              onTap: (){
+                saveUserId('');
+                AssistantMethods.getUserData(context, '');
+                setState(() {
+
+                });
+              },
+              child: Container(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.signOut,
+                          color: Palette.black6,
+                          size: 24.0,
+                        ),
+                        SizedBox(width: 10.0,),
+                        Text(
+                          "Logout",
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600,
+                              color: Palette.black6
+                          ),
+                        ),
+                      ],
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_right_outlined,
+                      size: 28.0,
+                      color: Palette.black6,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
