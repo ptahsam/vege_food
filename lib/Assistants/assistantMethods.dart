@@ -12,6 +12,22 @@ import 'package:vege_food/Models/user.dart';
 
 class AssistantMethods {
 
+  static Future<String> updateUserDetails(context, String field, String field_value, String userid) async{
+    String data = "";
+    var params = {
+      'updateUserDetails': '1',
+      'field': '${field}',
+      'field_value': '${field_value}',
+      'userid': '${userid}',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    data = response.toString();
+
+    return data;
+  }
+
   static Future<String> addNewOrder(context, String userid) async{
     String data = "";
     var params = {

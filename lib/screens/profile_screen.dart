@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/auth/auth.dart';
 import 'package:vege_food/config/palette.dart';
+import 'package:vege_food/sharedWidgets/personal_info.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -64,35 +65,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(top: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.user,
-                        color: Palette.black6,
-                        size: 24.0,
-                      ),
-                      SizedBox(width: 10.0,),
-                      Text(
-                        "Personal Information",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600,
-                            color: Palette.black6
+            InkWell(
+              onTap: (){
+                Navigator.push(context, PageTransition(child: PersonalInfo(), type: PageTransitionType.rightToLeft));
+              },
+              child: Container(
+                padding: EdgeInsets.only(top: 40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.user,
+                          color: Palette.black6,
+                          size: 24.0,
                         ),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_right_outlined,
-                    size: 28.0,
-                    color: Palette.black6,
-                  ),
-                ],
+                        SizedBox(width: 10.0,),
+                        Text(
+                          "Personal Information",
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600,
+                              color: Palette.black6
+                          ),
+                        ),
+                      ],
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_right_outlined,
+                      size: 28.0,
+                      color: Palette.black6,
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
