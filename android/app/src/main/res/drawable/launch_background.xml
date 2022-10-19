@@ -4,14 +4,14 @@
     <item android:drawable="@color/background_color" />
 
     <!-- You can insert your own image assets here -->
-    <item>
+    <!--<item>
         <bitmap
             android:gravity="center"
             android:src="@mipmap/ic_launcher" />
-    </item>
-    <!-- <item>
+    </item>-->
+    <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/launch_image" />
-    </item> -->
+            android:src="@mipmap/launcher_icon" />
+    </item>
 </layer-list>
