@@ -3,7 +3,7 @@
    <application
         android:label="VegeFood"
         android:name="${applicationName}"
-       android:icon="@mipmap/launcher_icon"
+       android:icon="@mipmap/logo"
        android:largeHeap="true"
        android:usesCleartextTraffic="true"
        android:requestLegacyExternalStorage="true"
@@ -24,8 +24,12 @@
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/LaunchTheme"
-              />
+              android:resource="@style/LaunchTheme" />
+
+            <meta-data
+                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+                android:resource="@drawable/launch_background" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
