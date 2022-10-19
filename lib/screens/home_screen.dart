@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Positioned(
                     right: 5.0,
-                    top: 0,
+                    top: 5.0,
                     child: Provider.of<AppData>(context).userOrder != null?Container(
                       height: 25,
                       width: 25,
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Positioned(
                       right: 5.0,
-                      top: 0,
+                      top: 5.0,
                       child: Provider.of<AppData>(context).userCart != null?Container(
                         height: 25,
                         width: 25,
