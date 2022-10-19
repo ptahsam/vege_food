@@ -67,9 +67,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            backgroundColor: Colors.white,
+            shadowColor: Colors.transparent,
             pinned: false,
             floating: true,
             title: Text(
@@ -77,22 +80,26 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.w900,
                 fontSize: 20.0,
-                color: Colors.white,
+                color: Palette.primaryColor,
               ),
             ),
             actions: [
-              Container(
-                padding: EdgeInsets.all(10.0),
-                margin: EdgeInsets.only(right: 15.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.search_rounded,
-                  size: 28.0,
-                  color: Palette.primaryColor,
-                ),
+              Stack(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.only(right: 15.0),
+                    decoration: BoxDecoration(
+                      color: Palette.primaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.search_rounded,
+                      size: 28.0,
+                      color: Palette.primaryColor,
+                    ),
+                  ),
+                ],
               ),
               Stack(
                 children: [
@@ -100,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.all(8.0),
                     margin: EdgeInsets.only(right: 15.0),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Palette.primaryColor,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -141,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.all(8.0),
                       margin: EdgeInsets.only(right: 12.0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Palette.primaryColor,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
