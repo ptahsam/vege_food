@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            getTotalCartItems(Provider.of<AppData>(context).userCart!),
+                            '${int.parse(getTotalCartItems(Provider.of<AppData>(context).userCart!)) > 9?"9+":getTotalCartItems(Provider.of<AppData>(context).userCart!)}',
                             style: TextStyle(
                               color: Colors.white,
                             ),
