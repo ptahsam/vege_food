@@ -22,6 +22,7 @@ class _CartDetailsState extends State<CartDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shadowColor: Colors.transparent,
         backgroundColor: Colors.white,
         leading: InkWell(
           onTap: (){
