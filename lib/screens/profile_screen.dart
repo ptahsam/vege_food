@@ -19,11 +19,13 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
+  String userid = '';
+
   @override
   void didUpdateWidget(covariant ProfileScreen oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
-    //checkUserExists();
+    checkUserExists();
   }
 
   @override
@@ -33,24 +35,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //checkUserExists();
   }
 
-  checkUserExists(){
-    Future.delayed(Duration.zero,()
-    async {
-      Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
+  checkUserExists() {
+    setState(() async {
+      userid = await getUserId();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider.of<AppData>(context).user != null?Scaffold(
+    return Provider.of<AppData>(context).user!.id != null?Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leadingWidth: 0,
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
         title: Text(
-          Provider.of<AppData>(context).user!.user_name!,
-        ),
+""        ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -259,9 +259,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           alignment: Alignment.center,
           child: Center(
             child: InkWell(
-              onTap: (){
-                Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
-              },
+              onTap: () async {
+                var res = await Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
+                  if(res == "LOGGED_IN"){
+                    AssistantMethods.getUserCartItems(context, await getUserId());
+                    AssistantMethods.getUserOrderItems(context, await getUserId());
+                  }
+                },
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.75,
                 padding: EdgeInsets.symmetric(vertical: 12.0,),

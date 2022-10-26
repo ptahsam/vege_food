@@ -73,7 +73,11 @@ class AppData extends ChangeNotifier
 
   void updateUser(User loggedUser)
   {
-    user = loggedUser;
+    if(loggedUser.id != null || loggedUser.id != ""){
+      user = loggedUser;
+    }else{
+      user = null;
+    }
     notifyListeners();
   }
 }

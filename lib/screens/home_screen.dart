@@ -1,4 +1,5 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -32,127 +33,76 @@ class _HomeScreenState extends State<HomeScreen> {
   void didUpdateWidget(covariant HomeScreen oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
-    getCartItems();
-    getOrderItems();
-    getUserData();
+
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUserData();
     AssistantMethods.getAllProducts(context);
     AssistantMethods.getAllCategories(context);
     AssistantMethods.getTopProducts(context);
-    getOrderItems();
-    getCartItems();
-  }
-
-  getUserData() async{
-    Future.delayed(Duration.zero,()
-    async {
-      AssistantMethods.getUserData(context, await getUserId());
-    });
-  }
-
-  getCartItems() async{
-      AssistantMethods.getUserCartItems(context, await getUserId());
-  }
-
-  getOrderItems() async{
-    AssistantMethods.getUserOrderItems(context, await getUserId());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.white,
-            shadowColor: Colors.transparent,
-            pinned: false,
-            floating: true,
-            title: Text(
-              "VegeFood",
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 20.0,
-                color: Palette.primaryColor,
+      body: RefreshIndicator(
+        onRefresh: (){
+          return Future.delayed(
+            Duration(seconds: 1), () {
+            AssistantMethods.getAllProducts(context);
+            AssistantMethods.getAllCategories(context);
+            AssistantMethods.getTopProducts(context);
+            },
+          );
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Colors.white,
+              shadowColor: Colors.transparent,
+              pinned: false,
+              floating: true,
+              title: Text(
+                "VegeFood",
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20.0,
+                  color: Palette.primaryColor,
+                ),
               ),
-            ),
-            actions: [
-              Stack(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    margin: EdgeInsets.only(right: 15.0, top: 10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.search_rounded,
-                      size: 28.0,
-                      color: Palette.primaryColor,
-                    ),
-                  ),
-                ],
-              ),
-              Stack(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    margin: EdgeInsets.only(right: 15.0, top: 10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.shopping_basket,
-                      size: 28.0,
-                      color: Palette.primaryColor,
-                    ),
-                  ),
-                  Positioned(
-                    right: 5.0,
-                    top: 5.0,
-                    child: Provider.of<AppData>(context).userOrder != null?Container(
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red,
-                      ),
-                      child: Center(
-                        child: Text(
-                          Provider.of<AppData>(context).userOrder!.length.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ):SizedBox.shrink(),
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: (){
-                  Navigator.push(context, PageTransition(child: CartDetails(), type: PageTransitionType.rightToLeft));
-                },
-                child: Stack(
+              actions: [
+                Stack(
                   children: [
                     Container(
                       padding: EdgeInsets.all(8.0),
-                      margin: EdgeInsets.only(right: 12.0, top: 10.0),
+                      margin: EdgeInsets.only(right: 15.0, top: 10.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        Icons.shopping_cart,
+                        Icons.search_rounded,
+                        size: 28.0,
+                        color: Palette.primaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(8.0),
+                      margin: EdgeInsets.only(right: 15.0, top: 10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.shopping_basket,
                         size: 28.0,
                         color: Palette.primaryColor,
                       ),
@@ -160,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Positioned(
                       right: 5.0,
                       top: 5.0,
-                      child: Provider.of<AppData>(context).userCart != null?Container(
+                      child: Provider.of<AppData>(context).userOrder != null?Container(
                         height: 25,
                         width: 25,
                         decoration: BoxDecoration(
@@ -169,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            '${int.parse(getTotalCartItems(Provider.of<AppData>(context).userCart!)) > 9?"9+":getTotalCartItems(Provider.of<AppData>(context).userCart!)}',
+                            Provider.of<AppData>(context).userOrder!.length.toString(),
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -179,85 +129,85 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          SliverToBoxAdapter(
-            child: Provider.of<AppData>(context).categoriesList != null?Container(
-              height: 150.0,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20),
-              child: ListView.builder(
-                itemCount: Provider.of<AppData>(context).categoriesList!.length + 1,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (ctx, int index){
-                  if(index == 0){
-                    return Container(
-                      margin: EdgeInsets.only(right: 10.0),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 100,
-                            width: 100,
-                            padding: EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Palette.greyBorder,
-                              border: Border.all(
-                                width: 1,
-                                color: Colors.green,
-                              ),
-                            ),
-                            child: Image.asset(
-                              "images/grocery_icon.png",
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          SizedBox(height: 5.0,),
-                          Expanded(
-                            child: Text(
-                              "Groceries",
-                              style: TextStyle(
-                                fontSize: 22.0,
-                                fontWeight: FontWeight.w500,
-                                color: Palette.textColor1,
-                              ),
-                            ),
-                          ),
-                        ],
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, PageTransition(child: CartDetails(), type: PageTransitionType.rightToLeft));
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(8.0),
+                        margin: EdgeInsets.only(right: 12.0, top: 10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.shopping_cart,
+                          size: 28.0,
+                          color: Palette.primaryColor,
+                        ),
                       ),
-                    );
-                  }else{
-                    Categories categories = Provider.of<AppData>(context).categoriesList![index - 1];
-                    return InkWell(
-                      onTap: (){
-                        Navigator.push(context, PageTransition(child: CategoryItems(category: categories,), type: PageTransitionType.rightToLeft));
-                      },
-                      child: Container(
+                      Positioned(
+                        right: 5.0,
+                        top: 5.0,
+                        child: Provider.of<AppData>(context).userCart != null?Container(
+                          height: 25,
+                          width: 25,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${int.parse(getTotalCartItems(Provider.of<AppData>(context).userCart!)) > 9?"9+":getTotalCartItems(Provider.of<AppData>(context).userCart!)}',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ):SizedBox.shrink(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SliverToBoxAdapter(
+              child: Provider.of<AppData>(context).categoriesList != null?Container(
+                height: 150.0,
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20),
+                child: ListView.builder(
+                  itemCount: Provider.of<AppData>(context).categoriesList!.length + 1,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (ctx, int index){
+                    if(index == 0){
+                      return Container(
                         margin: EdgeInsets.only(right: 10.0),
                         child: Column(
                           children: [
                             Container(
-                              height: 100.0,
-                              width: 100.0,
+                              height: 100,
+                              width: 100,
+                              padding: EdgeInsets.all(10.0),
                               decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: ExtendedNetworkImageProvider(
-                                    "${ApiConstants.baseUrl}/images/categories/${categories.category_image!}",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
                                 shape: BoxShape.circle,
+                                color: Palette.greyBorder,
                                 border: Border.all(
-                                    width: 1,
-                                    color: Palette.greyBorder
+                                  width: 1,
+                                  color: Colors.green,
                                 ),
+                              ),
+                              child: Image.asset(
+                                "images/grocery_icon.png",
+                                fit: BoxFit.contain,
                               ),
                             ),
                             SizedBox(height: 5.0,),
                             Expanded(
                               child: Text(
-                                categories.category_name!,
+                                "Groceries",
                                 style: TextStyle(
                                   fontSize: 22.0,
                                   fontWeight: FontWeight.w500,
@@ -267,51 +217,246 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
+                      );
+                    }else{
+                      Categories categories = Provider.of<AppData>(context).categoriesList![index - 1];
+                      return InkWell(
+                        onTap: (){
+                          Navigator.push(context, PageTransition(child: CategoryItems(category: categories,), type: PageTransitionType.rightToLeft));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: 10.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 100.0,
+                                width: 100.0,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: ExtendedNetworkImageProvider(
+                                      "${ApiConstants.baseUrl}/images/categories/${categories.category_image!}",
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      width: 1,
+                                      color: Palette.greyBorder
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 5.0,),
+                              Expanded(
+                                child: Text(
+                                  categories.category_name!,
+                                  style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Palette.textColor1,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ):Container(
+                height: 150.0,
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20),
+                child: ListView.builder(
+                  itemCount: 5,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (ctx, int index){
+                    return Container(
+                      margin: EdgeInsets.only(right: 10.0),
+                      child: Column(
+                        children: [
+                          FadeShimmer.round(
+                            size: 100,
+                            fadeTheme: FadeTheme.light,
+                          ),
+                          SizedBox(height: 10.0,),
+                          Expanded(
+                            child: FadeShimmer(
+                              height: 4.0,
+                              width: 100,
+                              radius: 4,
+                              highlightColor: Color(0xffF9F9FB),
+                              baseColor: Color(0xffE6E8EB),
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   }
-                },
+                ),
               ),
-            ):SizedBox.shrink(),
-          ),
-          SliverToBoxAdapter(
-            child: Provider.of<AppData>(context).productTopList != null?Stack(
-              children: [
-                Container(
-                  height: 300,
-                  margin: EdgeInsets.only(top: 30.0),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Palette.accentColor,
-                    border: Border(
-                      top: BorderSide(
-                        color: Palette.greyBorder,
-                        width: 1,
-                      ),
-                      /*bottom: BorderSide(
-                        color: Palette.greyBorder,
-                        width: 1,
-                      ),*/
-                    ),
-                    shape: BoxShape.rectangle
-                  ),
-                  child: ListView.builder(
-                    padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: Provider.of<AppData>(context).productTopList!.length,
-                    itemBuilder: (context, int index){
-                      Product product = Provider.of<AppData>(context).productTopList![index];
-                      return Container(
-                        margin: EdgeInsets.only(right: 10.0),
-                        padding: EdgeInsets.all(15.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          borderRadius: BorderRadius.circular(5.0),
+            ),
+            SliverToBoxAdapter(
+              child: Provider.of<AppData>(context).productTopList != null?Stack(
+                children: [
+                  Container(
+                    height: 300,
+                    margin: EdgeInsets.only(top: 30.0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Palette.accentColor,
+                      border: Border(
+                        top: BorderSide(
+                          color: Palette.greyBorder,
+                          width: 1,
                         ),
-                        child: Banner(
-                          message: "20% off !!",
-                          location: BannerLocation.topEnd,
+                        /*bottom: BorderSide(
+                          color: Palette.greyBorder,
+                          width: 1,
+                        ),*/
+                      ),
+                      shape: BoxShape.rectangle
+                    ),
+                    child: ListView.builder(
+                      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: Provider.of<AppData>(context).productTopList!.length,
+                      itemBuilder: (context, int index){
+                        Product product = Provider.of<AppData>(context).productTopList![index];
+                        return Container(
+                          margin: EdgeInsets.only(right: 10.0),
+                          padding: EdgeInsets.all(15.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white70,
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                          child: Banner(
+                            message: "20% off !!",
+                            location: BannerLocation.topEnd,
+                            color: Palette.primaryColor,
+                            child: Container(
+                              width: 250.0,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: Palette.greyBorder,
+                                ),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Column(
+                                children: [
+                                  ExtendedImage.network(
+                                    "${ApiConstants.baseUrl}/images/products/${product.product_photo!}",
+                                    height: 150.0,
+                                    width: double.infinity,
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.symmetric(horizontal: 12.0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  product.product_name!,
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.blueGrey,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                "KES. ${product.product_price!}.00",
+                                                style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.w100,
+                                                  color: Colors.redAccent
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 10.0,),
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.push(context, PageTransition(child: ProductDetails(product: product,), type: PageTransitionType.rightToLeft));
+                                          },
+                                          child: Center(
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(25.0),
+                                                color: Palette.primaryColor,
+                                              ),
+                                              child: Text("Get Offer"),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    left: 12.0,
+                    top: 15,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 3.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Text(
+                        "Top Picks",
+                        style: TextStyle(
                           color: Palette.primaryColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 22.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ):Stack(
+                children: [
+                  Container(
+                    height: 300,
+                    margin: EdgeInsets.only(top: 30.0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Palette.accentColor,
+                        border: Border(
+                          top: BorderSide(
+                            color: Palette.greyBorder,
+                            width: 1,
+                          ),
+                        ),
+                        shape: BoxShape.rectangle
+                    ),
+                    child: ListView.builder(
+                      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      itemBuilder: (ctx, int index){
+                        return Container(
+                          margin: EdgeInsets.only(right: 10.0),
+                          padding: EdgeInsets.all(15.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white70,
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
                           child: Container(
                             width: 250.0,
                             decoration: BoxDecoration(
@@ -322,58 +467,52 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ExtendedImage.network(
-                                  "${ApiConstants.baseUrl}/images/products/${product.product_photo!}",
-                                  height: 150.0,
-                                  width: double.infinity,
-                                  fit: BoxFit.scaleDown,
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: FadeShimmer(
+                                    width: 250 - 24,
+                                    height: 150,
+                                    highlightColor: Color(0xffF9F9FB),
+                                    baseColor: Color(0xffE6E8EB),
+                                  ),
                                 ),
                                 Expanded(
                                   child: Column(
                                     children: [
                                       Container(
-                                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                                        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Expanded(
-                                              child: Text(
-                                                product.product_name!,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.blueGrey,
-                                                ),
+                                              child: FadeShimmer(
+                                                width: 95,
+                                                height: 20,
+                                                highlightColor: Color(0xffF9F9FB),
+                                                baseColor: Color(0xffE6E8EB),
                                               ),
                                             ),
-                                            Text(
-                                              "KES. ${product.product_price!}.00",
-                                              style: TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w100,
-                                                color: Colors.redAccent
-                                              ),
+                                            SizedBox(width: 10.0,),
+                                            FadeShimmer(
+                                              width: 45,
+                                              height: 20,
+                                              highlightColor: Color(0xffF9F9FB),
+                                              baseColor: Color(0xffE6E8EB),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      SizedBox(height: 10.0,),
-                                      InkWell(
-                                        onTap: (){
-                                          Navigator.push(context, PageTransition(child: ProductDetails(product: product,), type: PageTransitionType.rightToLeft));
-                                        },
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                         child: Center(
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(25.0),
-                                              color: Palette.primaryColor,
-                                            ),
-                                            child: Text("Get Offer"),
-                                          ),
+                                          child: FadeShimmer(
+                                            width: double.infinity,
+                                            height: 20,
+                                            highlightColor: Color(0xffF9F9FB),
+                                            baseColor: Color(0xffE6E8EB),
+                                          )
                                         ),
                                       ),
                                     ],
@@ -382,93 +521,74 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Positioned(
-                  left: 12.0,
-                  top: 15,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 3.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
+                        );
+                      },
                     ),
-                    child: Text(
-                      "Top Picks",
-                      style: TextStyle(
-                        color: Palette.primaryColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 22.0,
+                  ),
+                ],
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 1.0,
+                      decoration: BoxDecoration(
+                          color: Palette.greyBorder
                       ),
                     ),
                   ),
-                ),
-              ],
-            ):SizedBox.shrink(),
-          ),
-          SliverToBoxAdapter(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
+                  Text(
+                    "Shop for groceries",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 22.0,
+                      color: Palette.primaryColor,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 1.0,
+                      decoration: BoxDecoration(
+                          color: Palette.greyBorder
+                      ),
+                    ),
+                  ),
+                  Container(
                     height: 1.0,
                     decoration: BoxDecoration(
                         color: Palette.greyBorder
                     ),
                   ),
-                ),
-                Text(
-                  "Shop for groceries",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 22.0,
-                    color: Palette.primaryColor,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 1.0,
-                    decoration: BoxDecoration(
-                        color: Palette.greyBorder
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 1.0,
-                  decoration: BoxDecoration(
-                      color: Palette.greyBorder
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Provider.of<AppData>(context).productList != null?SliverAnimatedList(
-            //padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
-            initialItemCount: Provider.of<AppData>(context).productList!.length,
-            itemBuilder: (ctx, int index, Animation){
-              Product product = Provider.of<AppData>(context).productList![index];
-              return InkWell(
-                onTap: (){
-                  Navigator.push(context, PageTransition(child: ProductDetails(product: product,), type: PageTransitionType.rightToLeft));
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(left: 12.0, right: 12.0, top: index == 0?20.0:0.0, bottom: index == (Provider.of<AppData>(context).productList!.length - 1)?20.0:0.0),
-                  child: SingleProductCard(product: product,),
-                ),
-              );
-            },
-          ):SliverToBoxAdapter(
-            child: Align(
-              alignment: Alignment.center,
-              child: Center(
-                child: CircularProgressIndicator(),
+                ],
               ),
             ),
-          )
-        ],
+            Provider.of<AppData>(context).productList != null?SliverAnimatedList(
+              //padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
+              initialItemCount: Provider.of<AppData>(context).productList!.length,
+              itemBuilder: (ctx, int index, Animation){
+                Product product = Provider.of<AppData>(context).productList![index];
+                return InkWell(
+                  onTap: (){
+                    Navigator.push(context, PageTransition(child: ProductDetails(product: product,), type: PageTransitionType.rightToLeft));
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 12.0, right: 12.0, top: index == 0?20.0:0.0, bottom: index == (Provider.of<AppData>(context).productList!.length - 1)?20.0:0.0),
+                    child: SingleProductCard(product: product,),
+                  ),
+                );
+              },
+            ):SliverToBoxAdapter(
+              child: Align(
+                alignment: Alignment.center,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -46,6 +46,7 @@ dependencies:
   fluttertoast: ^8.1.1
   intl: ^0.17.0
   flutter_launcher_icons: ^0.10.0
+  fade_shimmer: ^2.0.1
 
 dev_dependencies:
   flutter_test:

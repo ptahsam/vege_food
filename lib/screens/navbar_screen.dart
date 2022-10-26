@@ -32,9 +32,37 @@ class _NavBarScreenState extends State<NavBarScreen> {
   int _selectedIndex = 0;
 
   @override
+  void didUpdateWidget(covariant NavBarScreen oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    getCartItems();
+    getOrderItems();
+    getUserData();
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getUserData();
+    getOrderItems();
+    getCartItems();
+  }
+
+
+  getUserData() async{
+    Future.delayed(Duration.zero,()
+    async {
+      AssistantMethods.getUserData(context, await getUserId());
+    });
+  }
+
+  getCartItems() async{
+    AssistantMethods.getUserCartItems(context, await getUserId());
+  }
+
+  getOrderItems() async{
+    AssistantMethods.getUserOrderItems(context, await getUserId());
   }
 
   @override

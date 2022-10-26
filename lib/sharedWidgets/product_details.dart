@@ -226,7 +226,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     right: 12.0,
                     left: 12.0,
                     child: InkWell(
-                      onTap: Provider.of<AppData>(context).user == null?() async {
+                      onTap: Provider.of<AppData>(context).user != null?() async {
                         String res = await Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
                         if(res == "LOGGED_IN"){
                           addItemsToCart();

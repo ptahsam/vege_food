@@ -225,13 +225,15 @@ class _CartDetailsState extends State<CartDetails> {
                     SizedBox(height: 10.0,),
                     InkWell(
                       onTap: () async {
-                        String res = await AssistantMethods.addNewOrder(context, await getUserId());
-                        if(res == "SUCCESSFULLY_ADDED"){
-                          AssistantMethods.getUserCartItems(context, await getUserId());
-                          AssistantMethods.getUserOrderItems(context, await getUserId());
-                          Navigator.pop(context);
-                        }else{
-                          displayToastMessage("An error occurred. Please try again later", context);
+                        if(Provider.of<AppData>(context).user != null){
+                          String res = await AssistantMethods.addNewOrder(context, await getUserId());
+                          if(res == "SUCCESSFULLY_ADDED"){
+                            AssistantMethods.getUserCartItems(context, await getUserId());
+                            AssistantMethods.getUserOrderItems(context, await getUserId());
+                            Navigator.pop(context);
+                          }else{
+                            displayToastMessage("An error occurred. Please try again later", context);
+                          }
                         }
                       },
                       child: Container(

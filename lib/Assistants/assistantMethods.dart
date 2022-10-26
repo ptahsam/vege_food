@@ -56,6 +56,7 @@ class AssistantMethods {
       Provider.of<AppData>(context, listen: false).updateUser(user);
     }else{
       User user = User();
+      user.id = null;
       Provider.of<AppData>(context, listen: false).updateUser(user);
     }
   }
