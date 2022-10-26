@@ -85,7 +85,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       fit: BoxFit.cover,
                     ),
                     Positioned(
-                      top: 150.0,
+                      top: MediaQuery.of(context).size.height * 0.1,
                       right: 12.0,
                       left: 12.0,
                       child: Container(
