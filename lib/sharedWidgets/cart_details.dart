@@ -22,6 +22,7 @@ class _CartDetailsState extends State<CartDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: InkWell(
           onTap: (){
             Navigator.pop(context);
@@ -36,14 +37,14 @@ class _CartDetailsState extends State<CartDetails> {
             ),
             child: Icon(
               Icons.close,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
         title: Text(
           "Edit Cart",
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
         actions: [
@@ -57,7 +58,7 @@ class _CartDetailsState extends State<CartDetails> {
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w400,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -94,6 +95,8 @@ class _CartDetailsState extends State<CartDetails> {
                   ),
                   title: Text(
                     cart.productItem!.product_name!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.blueGrey,
