@@ -96,192 +96,194 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
-                padding: const EdgeInsets.all(4.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100]!,
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.search,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          focusNode: myFocusNode,
-                          controller: textSearchEditingController,
-                          onChanged: (input){
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+                  padding: const EdgeInsets.all(4.0),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100]!,
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            focusNode: myFocusNode,
+                            controller: textSearchEditingController,
+                            onChanged: (input){
 
-                          },
-                          keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.newline,
-                          minLines: 1,
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            contentPadding:
-                            EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: "Type to search ...",
-                            hintStyle: TextStyle(
+                            },
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.newline,
+                            minLines: 1,
+                            maxLines: 1,
+                            style: TextStyle(
                               color: Colors.black,
                             ),
-                          ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding:
+                              EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                              hintText: "Type to search ...",
+                              hintStyle: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
 
-                        ),
-                      ),
-                      Visibility(
-                        visible: _iconIsVisible,
-                        child: InkWell(
-                          onTap: (){
-                            setState(() {
-                              searchProductList.clear();
-                              searchCategoryList.clear();
-                              textSearchEditingController.text = "";
-                              _iconIsVisible = false;
-                            });
-                          },
-                          child: Icon(
-                              Icons.close
                           ),
                         ),
+                        Visibility(
+                          visible: _iconIsVisible,
+                          child: InkWell(
+                            onTap: (){
+                              setState(() {
+                                searchProductList.clear();
+                                searchCategoryList.clear();
+                                textSearchEditingController.text = "";
+                                _iconIsVisible = false;
+                              });
+                            },
+                            child: Icon(
+                                Icons.close
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                searchProductList.isNotEmpty?Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 1.0,
+                        margin: EdgeInsets.only(right: 3.0),
+                        color: Palette.greyBorder,
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              searchProductList.isNotEmpty?Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 1.0,
-                      margin: EdgeInsets.only(right: 3.0),
-                      color: Palette.greyBorder,
                     ),
-                  ),
-                  Text(
-                    "Products",
-                    style: TextStyle(
-                      color: Palette.textColor1,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17.0,
+                    Text(
+                      "Products",
+                      style: TextStyle(
+                        color: Palette.textColor1,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17.0,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 1.0,
-                      margin: EdgeInsets.only(right: 3.0),
-                      color: Palette.greyBorder,
+                    Expanded(
+                      child: Container(
+                        height: 1.0,
+                        margin: EdgeInsets.only(right: 3.0),
+                        color: Palette.greyBorder,
+                      ),
                     ),
+                  ],
+                ):SizedBox.shrink(),
+                searchProductList.isNotEmpty?Container(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  padding: EdgeInsets.symmetric(horizontal: 12.0),
+                  margin: EdgeInsets.only(bottom: 20.0),
+                  child: ListView.builder(
+                    padding: EdgeInsets.only(top: 20.0),
+                    itemCount: searchProductList.length,
+                    itemBuilder: (ctx, int index){
+                      Product product = searchProductList[index];
+                      return InkWell(
+                        onTap: (){
+                          Navigator.push(context, PageTransition(child: ProductDetails(product: product,), type: PageTransitionType.rightToLeft));
+                        },
+                        child: SingleProductCard(product: product),
+                      );
+                    },
                   ),
-                ],
-              ):SizedBox.shrink(),
-              searchProductList.isNotEmpty?Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                margin: EdgeInsets.only(bottom: 20.0),
-                child: ListView.builder(
-                  padding: EdgeInsets.only(top: 20.0),
-                  itemCount: searchProductList.length,
-                  itemBuilder: (ctx, int index){
-                    Product product = searchProductList[index];
-                    return InkWell(
-                      onTap: (){
-                        Navigator.push(context, PageTransition(child: ProductDetails(product: product,), type: PageTransitionType.rightToLeft));
-                      },
-                      child: SingleProductCard(product: product),
-                    );
-                  },
-                ),
-              ):SizedBox.shrink(),
-              searchCategoryList.isNotEmpty?Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 1.0,
-                      margin: EdgeInsets.only(right: 3.0),
-                      color: Palette.greyBorder,
+                ):SizedBox.shrink(),
+                searchCategoryList.isNotEmpty?Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 1.0,
+                        margin: EdgeInsets.only(right: 3.0),
+                        color: Palette.greyBorder,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "Categories",
-                    style: TextStyle(
-                      color: Palette.textColor1,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17.0,
+                    Text(
+                      "Categories",
+                      style: TextStyle(
+                        color: Palette.textColor1,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17.0,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 1.0,
-                      margin: EdgeInsets.only(right: 3.0),
-                      color: Palette.greyBorder,
+                    Expanded(
+                      child: Container(
+                        height: 1.0,
+                        margin: EdgeInsets.only(right: 3.0),
+                        color: Palette.greyBorder,
+                      ),
                     ),
-                  ),
-                ],
-              ):SizedBox.shrink(),
-              searchProductList.isNotEmpty?Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
-                  itemCount: searchCategoryList.length,
-                  itemBuilder: (ctx, int index){
-                    Categories category = searchCategoryList[index];
-                    return InkWell(
-                      onTap: (){
-                        Navigator.push(context, PageTransition(child: CategoryItems(category: category,), type: PageTransitionType.rightToLeft));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 60.0,
-                            width: 60.0,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: ExtendedNetworkImageProvider(
-                                  "${ApiConstants.baseUrl}/images/categories/${category.category_image!}",
+                  ],
+                ):SizedBox.shrink(),
+                searchProductList.isNotEmpty?Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
+                    itemCount: searchCategoryList.length,
+                    itemBuilder: (ctx, int index){
+                      Categories category = searchCategoryList[index];
+                      return InkWell(
+                        onTap: (){
+                          Navigator.push(context, PageTransition(child: CategoryItems(category: category,), type: PageTransitionType.rightToLeft));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 60.0,
+                              width: 60.0,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: ExtendedNetworkImageProvider(
+                                    "${ApiConstants.baseUrl}/images/categories/${category.category_image!}",
+                                  ),
+                                  fit: BoxFit.cover,
                                 ),
-                                fit: BoxFit.cover,
-                              ),
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                  width: 1,
-                                  color: Palette.greyBorder
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                    width: 1,
+                                    color: Palette.greyBorder
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 10.0,),
-                          Text(
-                            category.category_name!,
-                            style: TextStyle(
-                              color: Colors.blueGrey,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
+                            SizedBox(width: 10.0,),
+                            Text(
+                              category.category_name!,
+                              style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ):SizedBox.shrink(),
-            ],
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ):SizedBox.shrink(),
+              ],
+            ),
           ),
         ),
       ),

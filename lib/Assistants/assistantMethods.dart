@@ -9,8 +9,13 @@ import 'package:vege_food/Models/orderItem.dart';
 import 'package:vege_food/Models/orders.dart';
 import 'package:vege_food/Models/product.dart';
 import 'package:vege_food/Models/user.dart';
+import 'package:vege_food/config/config.dart';
 
 class AssistantMethods {
+
+  static uploadUserProfile(List<File> files) async {
+    var response = await RequestAssistant.uploadFile(files, await getUserId());
+  }
 
   static Future<String> updateUserAddress(context, String field, String field_value, String userid) async{
     String data = "";

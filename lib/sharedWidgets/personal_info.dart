@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
@@ -23,6 +27,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
   bool isEditingPhone = false;
   bool isEditingEmail = false;
   bool isEdit = false;
+
+  List<File> userSelectedFileList = [];
 
   @override
   void initState() {
@@ -145,19 +151,31 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         Positioned(
                           bottom: 0.0,
                           right: 0.0,
-                          child: Container(
-                            padding: EdgeInsets.all(6.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Palette.primaryColor,
-                              border: Border.all(
-                                width: 2.0,
+                          child: InkWell(
+                            onTap: (){
+                              showModalBottomSheet(
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                                ),
+                                context: context,
+                                builder: (context) => buildSelectSheet(),
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Palette.primaryColor,
+                                border: Border.all(
+                                  width: 2.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.add,
                                 color: Colors.white,
                               ),
-                            ),
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -359,6 +377,85 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildSelectSheet() {
+    return Container(
+      padding: const EdgeInsets.only(left: 12.0, top: 30.0, right: 12.0, bottom: 50.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Add a profile picture",
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(height: 20.0,),
+          userSelectedFileList.isNotEmpty?InkWell(
+            onTap: (){
+              AssistantMethods.uploadUserProfile(userSelectedFileList);
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              decoration: BoxDecoration(
+                color: Palette.primaryColor,
+              ),
+              child: Text(
+                "Upload",
+              ),
+            ),
+          ):Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 60.0,
+                width: 60.0,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200]!,
+                  shape: BoxShape.circle
+                ),
+                child: Icon(
+                  MdiIcons.camera,
+                  color: Palette.primaryColor,
+                ),
+              ),
+              SizedBox(width: 40.0,),
+              InkWell(
+                onTap: () async {
+                  FilePickerResult? result = await FilePicker.platform.pickFiles(
+                      type: FileType.custom,
+                      allowedExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'],
+                      allowMultiple: false,
+                      allowCompression: true
+                  );
+                  if(result != null){
+                    setState(() {
+                      userSelectedFileList = result.paths.map((path) => File(path!)).toList();
+                    });
+                  }
+                },
+                child: Container(
+                  height: 60.0,
+                  width: 60.0,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[200]!,
+                      shape: BoxShape.circle
+                  ),
+                  child: Icon(
+                    MdiIcons.fileUpload,
+                    color: Palette.primaryColor,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
