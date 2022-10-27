@@ -16,6 +16,7 @@ import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/sharedWidgets/cart_details.dart';
 import 'package:vege_food/sharedWidgets/category_items.dart';
 import 'package:vege_food/sharedWidgets/product_details.dart';
+import 'package:vege_food/sharedWidgets/search_page.dart';
 import 'package:vege_food/sharedWidgets/single_product_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -76,22 +77,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 actions: [
-                  Stack(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(8.0),
-                        margin: EdgeInsets.only(right: 15.0, top: 10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, PageTransition(child: SearchPage(), type: PageTransitionType.rightToLeft));
+                    },
+                    child:  Stack(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          margin: EdgeInsets.only(right: 15.0, top: 10.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.search_rounded,
+                            size: 28.0,
+                            color: Palette.primaryColor,
+                          ),
                         ),
-                        child: Icon(
-                          Icons.search_rounded,
-                          size: 28.0,
-                          color: Palette.primaryColor,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Stack(
                     children: [

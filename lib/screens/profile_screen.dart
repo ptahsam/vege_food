@@ -5,10 +5,12 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
+import 'package:vege_food/Models/user.dart';
 import 'package:vege_food/auth/auth.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/sharedWidgets/personal_info.dart';
+import 'package:vege_food/sharedWidgets/user_address.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -43,14 +45,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.of<AppData>(context).user!.id != null?Scaffold(
+    User? user = Provider.of<AppData>(context).user != null?Provider.of<AppData>(context).user!:null;
+    return Provider.of<AppData>(context).user != null?Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leadingWidth: 0,
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
         title: Text(
-""        ),
+            ""
+        ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -72,167 +76,145 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.push(context, PageTransition(child: PersonalInfo(), type: PageTransitionType.rightToLeft));
               },
               child: Container(
-                padding: EdgeInsets.only(top: 40.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          FontAwesomeIcons.user,
-                          color: Palette.black6,
-                          size: 24.0,
-                        ),
-                        SizedBox(width: 10.0,),
-                        Text(
-                          "Personal Information",
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
-                              color: Palette.black6
-                          ),
-                        ),
-                      ],
+                padding: EdgeInsets.only(top: 20.0),
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    FontAwesomeIcons.user,
+                    color: Palette.black6,
+                    size: 24.0,
+                  ),
+                  title: Text(
+                    "Personal Information",
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
+                        color: Palette.black6
                     ),
-                    Icon(
-                      Icons.keyboard_arrow_right_outlined,
-                      size: 28.0,
-                      color: Palette.black6,
+                  ),
+                  subtitle: Text(
+                    "${user!.user_name!}, ${user.user_phone!}, ${user.user_email!}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Palette.textColor1,
+                      fontSize: 16.0,
                     ),
-                  ],
+                  ),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                    size: 28.0,
+                    color: Palette.black6,
+                  ),
                 ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.noteSticky,
-                        color: Palette.black6,
-                        size: 24.0,
-                      ),
-                      SizedBox(width: 10.0,),
-                      Text(
-                        "Order Information",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600,
-                            color: Palette.black6
-                        ),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_right_outlined,
-                    size: 28.0,
-                    color: Palette.black6,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.cog,
-                        color: Palette.black6,
-                        size: 24.0,
-                      ),
-                      SizedBox(width: 10.0,),
-                      Text(
-                        "Settings",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600,
-                            color: Palette.black6
-                        ),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_right_outlined,
-                    size: 28.0,
-                    color: Palette.black6,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.info,
-                        color: Palette.black6,
-                        size: 24.0,
-                      ),
-                      SizedBox(width: 10.0,),
-                      Text(
-                        "About",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600,
-                            color: Palette.black6
-                        ),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_right_outlined,
-                    size: 28.0,
-                    color: Palette.black6,
-                  ),
-                ],
               ),
             ),
             InkWell(
               onTap: (){
+                Navigator.push(context, PageTransition(child: UserAddress(), type: PageTransitionType.rightToLeft));
+              },
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(
+                  FontAwesomeIcons.noteSticky,
+                  color: Palette.black6,
+                  size: 24.0,
+                ),
+                title: Text(
+                  "Order Information",
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w600,
+                      color: Palette.black6
+                  ),
+                ),
+                subtitle: Text(
+                  "${user.address!.address!}, ${user.address!.county!}, ${user.address!.city}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Palette.textColor1,
+                    fontSize: 16.0,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right_outlined,
+                  size: 28.0,
+                  color: Palette.black6,
+                ),
+              ),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(
+                FontAwesomeIcons.cog,
+                color: Palette.black6,
+                size: 24.0,
+              ),
+              title: Text(
+                "Settings",
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                    color: Palette.black6
+                ),
+              ),
+              trailing: Icon(
+                Icons.keyboard_arrow_right_outlined,
+                size: 28.0,
+                color: Palette.black6,
+              ),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(
+                FontAwesomeIcons.info,
+                color: Palette.black6,
+                size: 24.0,
+              ),
+              title: Text(
+                "About",
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                    color: Palette.black6
+                ),
+              ),
+              trailing: Icon(
+                Icons.keyboard_arrow_right_outlined,
+                size: 28.0,
+                color: Palette.black6,
+              ),
+            ),
+            InkWell(
+              onTap: () async {
                 saveUserId('');
                 AssistantMethods.getUserData(context, '');
+                AssistantMethods.getUserCartItems(context, await getUserId());
+                AssistantMethods.getUserOrderItems(context, await getUserId());
                 setState(() {
 
                 });
               },
-              child: Container(
-                padding: EdgeInsets.only(top: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          FontAwesomeIcons.signOut,
-                          color: Palette.black6,
-                          size: 24.0,
-                        ),
-                        SizedBox(width: 10.0,),
-                        Text(
-                          "Logout",
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
-                              color: Palette.black6
-                          ),
-                        ),
-                      ],
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_right_outlined,
-                      size: 28.0,
-                      color: Palette.black6,
-                    ),
-                  ],
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(
+                  FontAwesomeIcons.signOut,
+                  color: Palette.black6,
+                  size: 24.0,
+                ),
+                title: Text(
+                  "Logout",
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w600,
+                      color: Palette.black6
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right_outlined,
+                  size: 28.0,
+                  color: Palette.black6,
                 ),
               ),
             ),
@@ -255,10 +237,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        child: Align(
-          alignment: Alignment.center,
-          child: Center(
-            child: InkWell(
+        child: Column(
+          children: [
+            SizedBox(height: 20.0,),
+            Center(
+              child: Container(
+                height: 150.0,
+                width: 150.0,
+                margin: EdgeInsets.all(3.0),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: ExtendedAssetImageProvider(
+                      "images/profile.jpg",
+                    )
+                  ),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    width: 1.0,
+                    color: Palette.greyBorder,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 15.0,),
+            Text(
+              "Login or create account to manage your orders, edit your cart items and much more...",
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 18.0,
+                  color: Palette.textColor1
+              ),
+            ),
+            SizedBox(height: 20.0,),
+            InkWell(
               onTap: () async {
                 var res = await Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
                   if(res == "LOGGED_IN"){
@@ -266,24 +279,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     AssistantMethods.getUserOrderItems(context, await getUserId());
                   }
                 },
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.75,
-                padding: EdgeInsets.symmetric(vertical: 12.0,),
-                decoration: BoxDecoration(
-                  color: Palette.primaryColor,
-                ),
-                child: Text(
-                  "Login or Signup",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+              child: Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  padding: EdgeInsets.symmetric(vertical: 12.0,),
+                  decoration: BoxDecoration(
+                    color: Palette.primaryColor,
+                  ),
+                  child: Text(
+                    "Login or Signup",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

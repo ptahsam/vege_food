@@ -5,3 +5,5 @@ export 'single_product_card.dart';
 export 'cart_details.dart';
 export 'view_order.dart';
 export 'personal_info.dart';
+export 'search_page.dart';
+export 'user_address.dart';

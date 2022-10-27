@@ -7,4 +7,5 @@ class Palette
   static const Color textColor1 = Color(0xFF999999);
   static const Color accentColor = Color(0xFFFEF9EB);
   static const Color black6 = Color(0xFF666666);
+  static const Color orange1 = Color(0xFFfa7c05);
 }

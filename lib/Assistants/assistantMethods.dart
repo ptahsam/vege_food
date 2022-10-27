@@ -12,6 +12,22 @@ import 'package:vege_food/Models/user.dart';
 
 class AssistantMethods {
 
+  static Future<String> updateUserAddress(context, String field, String field_value, String userid) async{
+    String data = "";
+    var params = {
+      'updateUserAddress': '1',
+      'field': '${field}',
+      'field_value': '${field_value}',
+      'userid': '${userid}',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    data = response.toString();
+
+    return data;
+  }
+
   static Future<String> updateUserDetails(context, String field, String field_value, String userid) async{
     String data = "";
     var params = {
@@ -53,11 +69,10 @@ class AssistantMethods {
     if(response != "failed" && response != "NOT_REGISTERED"){
       User user = User.fromJson(response);
 
-      Provider.of<AppData>(context, listen: false).updateUser(user);
+      Provider.of<AppData>(context, listen: false).updateUser(user, true);
     }else{
       User user = User();
-      user.id = null;
-      Provider.of<AppData>(context, listen: false).updateUser(user);
+      Provider.of<AppData>(context, listen: false).updateUser(user, false);
     }
   }
 
@@ -75,7 +90,7 @@ class AssistantMethods {
 
       User user = User.fromJson(response);
 
-      Provider.of<AppData>(context, listen: false).updateUser(user);
+      Provider.of<AppData>(context, listen: false).updateUser(user, true);
       data = "LOGGED_IN";
     }else{
       data = response.toString();
