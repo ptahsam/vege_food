@@ -436,6 +436,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       allowMultiple: false,
                       allowCompression: true
                   );
+                  print(result);
                   if(result != null){
                     setState(() {
                       userSelectedFileList = result.paths.map((path) => File(path!)).toList();
