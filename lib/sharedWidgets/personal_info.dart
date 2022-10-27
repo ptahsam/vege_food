@@ -28,7 +28,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   bool isEditingEmail = false;
   bool isEdit = false;
 
-  List<File> userSelectedFileList = [];
+  File? userSelectedFile;
 
   @override
   void initState() {
@@ -399,9 +399,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
             ),
           ),
           SizedBox(height: 20.0,),
-          userSelectedFileList.isNotEmpty?InkWell(
+          userSelectedFile != null?InkWell(
             onTap: (){
-              AssistantMethods.uploadUserProfile(userSelectedFileList);
+              AssistantMethods.uploadUserProfile(userSelectedFile!);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -438,8 +438,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   );
                   print(result);
                   if(result != null){
+                    print(result);
+                    File file = File(result.files.single.path!);
                     setState(() {
-                      userSelectedFileList = result.paths.map((path) => File(path!)).toList();
+                      userSelectedFile = file;
                     });
                   }
                 },
