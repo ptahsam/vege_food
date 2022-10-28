@@ -379,6 +379,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     trailing: isEditingEmail?InkWell(
                       onTap: () async {
                         String res = await AssistantMethods.updateUserDetails(context, "user_email", emailTextEditingController.text, await getUserId());
+                        print(res);
                         if(res == "SUCCESSFULLY_UPDATED"){
                           AssistantMethods.getUserData(context, await getUserId());
                           setState(() {
