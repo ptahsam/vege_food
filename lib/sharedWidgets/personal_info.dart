@@ -429,25 +429,54 @@ class _PersonalInfoState extends State<PersonalInfo> {
             ),
           ),
           SizedBox(height: 20.0,),
-          InkWell(
-            onTap: () async {
-              String res = await AssistantMethods.uploadUserProfile(userSelectedFile!);
-              if(res == "SUCCESSFULLY_UPDATED"){
-                AssistantMethods.getUserData(context, await getUserId());
-                Navigator.pop(context);
-              }else{
-                displayToastMessage("An error occured. Please try again later.", context);
-              }
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              decoration: BoxDecoration(
-                color: Palette.primaryColor,
-              ),
-              child: Text(
-                "Upload",
-              ),
+          Container(
+            child: Image.file(
+              userSelectedFile!,
+              height: 150,
+              width: 100,
+              fit: BoxFit.fill,
             ),
+          ),
+          Row(
+            children: [
+              InkWell(
+                onTap: () async {
+                  String res = await AssistantMethods.uploadUserProfile(userSelectedFile!);
+                  if(res == "SUCCESSFULLY_UPDATED"){
+                    AssistantMethods.getUserData(context, await getUserId());
+                    Navigator.pop(context);
+                  }else{
+                    displayToastMessage("An error occured. Please try again later.", context);
+                  }
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  decoration: BoxDecoration(
+                    color: Palette.primaryColor,
+                  ),
+                  child: Text(
+                    "Upload",
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () async {
+                  setState(() {
+                    userSelectedFile = null;
+                  });
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                  ),
+                  child: Text(
+                    "Discard",
+                  ),
+                ),
+              ),
+            ],
           )
         ],
       ),
