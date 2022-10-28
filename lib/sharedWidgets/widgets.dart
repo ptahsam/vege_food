@@ -7,3 +7,4 @@ export 'view_order.dart';
 export 'personal_info.dart';
 export 'search_page.dart';
 export 'user_address.dart';
+export 'view_user_photo.dart';

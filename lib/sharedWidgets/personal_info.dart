@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
@@ -10,6 +11,7 @@ import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/user.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
+import 'package:vege_food/sharedWidgets/view_user_photo.dart';
 
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({Key? key}) : super(key: key);
@@ -133,7 +135,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           width: 100.0,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.red,
+                            color: Palette.accentColor,
                             border: Border.all(
                               width: 2.0,
                               color: Colors.white,
@@ -141,11 +143,30 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(60.0),
-                            child: user.user_photo != null?Image.network(
-                              "${ApiConstants.baseUrl}/images/profiles/${user.user_photo!}",
-                              height: 100.0,
-                              width: 100.0,
-                              fit: BoxFit.cover,
+                            child: user.user_photo != null?InkWell(
+                              onTap: (){
+                                Navigator.push(context, PageTransition(child: ViewUserPhoto(user: user,), type: PageTransitionType.rightToLeft));
+                              },
+                              child: Image.network(
+                                "${ApiConstants.baseUrl}/images/profiles/${user.user_photo!}",
+                                height: 100.0,
+                                width: 100.0,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (BuildContext context, Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value: loadingProgress.expectedTotalBytes != null
+                                          ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                          : null,
+                                    ),
+                                  );
+                                },
+                              ),
                             ):Image.asset(
                               "images/profile.jpg",
                               height: 100.0,
@@ -178,7 +199,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                   color: Colors.white,
                                 ),
                               ),
-                              child: Icon(
+                              child: user.user_photo != null?Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ):Icon(
                                 Icons.add,
                                 color: Colors.white,
                               ),
@@ -389,15 +413,15 @@ class _PersonalInfoState extends State<PersonalInfo> {
     );
   }
 
-  Widget buildSelectSheet() {
+  Widget buildUploadSheet() {
     return Container(
       padding: const EdgeInsets.only(left: 12.0, top: 30.0, right: 12.0, bottom: 50.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Add a profile picture",
+            "Upload profile photo",
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
@@ -405,7 +429,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
             ),
           ),
           SizedBox(height: 20.0,),
-          userSelectedFile != null?InkWell(
+          InkWell(
             onTap: (){
               AssistantMethods.uploadUserProfile(userSelectedFile!);
             },
@@ -418,7 +442,29 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 "Upload",
               ),
             ),
-          ):Row(
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildSelectSheet() {
+    return Container(
+      padding: const EdgeInsets.only(left: 12.0, top: 30.0, right: 12.0, bottom: 50.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Add a profile photo",
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(height: 20.0,),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -442,13 +488,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       allowMultiple: false,
                       allowCompression: true
                   );
-                  print(result);
                   if(result != null){
-                    print(result);
                     File file = File(result.files.single.path!);
                     setState(() {
                       userSelectedFile = file;
                     });
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                      ),
+                      context: context,
+                      builder: (context) => buildUploadSheet(),
+                    );
                   }
                 },
                 child: Container(

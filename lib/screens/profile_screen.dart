@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
+import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/user.dart';
 import 'package:vege_food/auth/auth.dart';
 import 'package:vege_food/config/config.dart';
@@ -64,7 +65,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(60.0),
-                child: Image.asset(
+                child: user!.user_photo != null?Image.network(
+                  "${ApiConstants.baseUrl}/images/profiles/${user.user_photo!}",
+                  height: 100.0,
+                  width: 100.0,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Center(
+                      child: Container(
+                        margin: EdgeInsets.all(8.0),
+                        height: 100,
+                        width: 100,
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      ),
+                    );
+                  },
+                ):Image.asset(
                   "images/profile.jpg",
                   height: 100.0,
                   width: 100.0,
