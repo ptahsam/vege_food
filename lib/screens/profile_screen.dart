@@ -268,6 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
+        padding: EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
           children: [
             SizedBox(height: 20.0,),
