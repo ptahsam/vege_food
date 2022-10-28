@@ -6,6 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
+import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/user.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
@@ -140,7 +141,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(60.0),
-                            child: Image.asset(
+                            child: user.user_photo != null?Image.network(
+                              "${ApiConstants.baseUrl}/images/profiles/${user.user_photo!}",
+                              height: 100.0,
+                              width: 100.0,
+                              fit: BoxFit.cover,
+                            ):Image.asset(
                               "images/profile.jpg",
                               height: 100.0,
                               width: 100.0,
