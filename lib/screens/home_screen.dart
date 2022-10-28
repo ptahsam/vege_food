@@ -54,11 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: RefreshIndicator(
           onRefresh: (){
             return Future.delayed(
-              Duration(seconds: 1), () {
+              Duration(seconds: 1), () async {
               AssistantMethods.getAllProducts(context);
               AssistantMethods.getAllCategories(context);
               AssistantMethods.getTopProducts(context);
-              },
+              AssistantMethods.getUserCartItems(context, await getUserId());
+              AssistantMethods.getUserOrderItems(context, await getUserId());
+            },
             );
           },
           child: CustomScrollView(
