@@ -18,7 +18,7 @@ class RequestAssistant
     //print('RESPONSE WITH HTTP');
     //print(responseString);
     //print('\n\n');
-    return responseString;
+    return responseString.toString();
   }
 
   static Future<dynamic> getRequest(Map params) async

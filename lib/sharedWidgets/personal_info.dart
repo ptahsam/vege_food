@@ -431,27 +431,27 @@ class _PersonalInfoState extends State<PersonalInfo> {
           ),
           SizedBox(height: 20.0,),
           Container(
-            width: MediaQuery.of(context).size.width * 0.5,
+            width: MediaQuery.of(context).size.width * 0.8,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Image.file(
                 userSelectedFile!,
                 height: MediaQuery.of(context).size.height * 0.6,
-                width: MediaQuery.of(context).size.width * 0.5,
+                width: MediaQuery.of(context).size.width * 0.8,
                 fit: BoxFit.cover,
               ),
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width * 0.5,
+            width: MediaQuery.of(context).size.width - 24,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
                   onTap: () async {
                     String res = await AssistantMethods.uploadUserProfile(userSelectedFile!);
-                    print(res);
-                    if(res == "SUCCESSFULLY_UPDATED"){
+                    print(res.toString());
+                    if(res.toString() == "SUCCESSFULLY_UPDATED"){
                       AssistantMethods.getUserData(context, await getUserId());
                       Navigator.pop(context);
                     }else{
