@@ -8,7 +8,7 @@ class RequestAssistant
   static Future<dynamic> uploadFile(File file, String userid) async
   {
     http.MultipartRequest request = http.MultipartRequest('POST', Uri.parse("${ApiConstants.baseUrl}/includes/process.php"));
-    request.fields['useid'] = userid;
+    request.fields['userid'] = userid;
     request.fields['uploadUserProfile'] = '1';
     request.files.add(await http.MultipartFile.fromPath('files', file.path));
     http.StreamedResponse response = await request.send();
