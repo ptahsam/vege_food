@@ -44,13 +44,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                "images/icon.png",
-                height: 70.0,
-                width: 70.0,
+                "images/logo_only.png",
+                height: 100.0,
+                width: 150.0,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
