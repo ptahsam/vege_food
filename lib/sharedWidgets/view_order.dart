@@ -1,6 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/orderItem.dart';
 import 'package:vege_food/Models/orders.dart';
@@ -69,6 +70,25 @@ class _ViewOrderState extends State<ViewOrder> {
               ),
             ),
           ):SizedBox.shrink(),
+          InkWell(
+            onTap: (){
+              showModalBottomSheet(
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                ),
+                context: context,
+                builder: (context) => buildOrderOptions(),
+              );
+            },
+            child: Container(
+              padding: EdgeInsets.only(right: 12.0),
+              child: Icon(
+                Icons.more_vert_outlined,
+                color: Colors.black,
+              ),
+            ),
+          ),
         ],
       ),
       body: Container(
@@ -257,6 +277,55 @@ class _ViewOrderState extends State<ViewOrder> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildOrderOptions() {
+    return Container(
+      padding: const EdgeInsets.only(left: 12.0, top: 30.0, right: 12.0, bottom: 50.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
+            onTap: () async {
+              String res = await AssistantMethods.removeOrder(context, widget.order.order_refno!);
+              if(res == "SUCCESSFULLY_REMOVED"){
+                AssistantMethods.getUserOrderItems(context, await getUserId());
+                Navigator.pop(context);
+                Navigator.pop(context);
+              }
+            },
+            child: Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(6.0),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    iconSize: 22.0,
+                    onPressed: () => {},
+                  ),
+                ),
+                const SizedBox(width: 14.0,),
+                const Text(
+                  "Remove this order",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -50,6 +50,20 @@ class AssistantMethods {
     return data;
   }
 
+  static Future<String> removeOrder(context, String orderrefno) async{
+    String data = "";
+    var params = {
+      'removeOrder': '1',
+      'orderrefno': '${orderrefno}',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    data = response.toString();
+
+    return data;
+  }
+
   static Future<String> addNewOrder(context, String userid) async{
     String data = "";
     var params = {
