@@ -230,7 +230,7 @@ class _CartDetailsState extends State<CartDetails> {
                     SizedBox(height: 10.0,),
                     InkWell(
                       onTap: () async {
-                        if(Provider.of<AppData>(context).user != null){
+                        if(Provider.of<AppData>(context, listen: false).user != null){
                           String res = await AssistantMethods.addNewOrder(context, await getUserId());
                           if(res == "SUCCESSFULLY_ADDED"){
                             AssistantMethods.getUserCartItems(context, await getUserId());
