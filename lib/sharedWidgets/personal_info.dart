@@ -442,6 +442,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
               ),
             ),
           ),
+          SizedBox(height: 10.0,),
           Container(
             width: MediaQuery.of(context).size.width - 24,
             child: Row(
@@ -450,8 +451,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 InkWell(
                   onTap: () async {
                     String res = await AssistantMethods.uploadUserProfile(userSelectedFile!);
-                    print(res.toString());
-                    if(res.toString() == "SUCCESSFULLY_UPDATED"){
+                    print(res.toString().replaceAll('"', ''));
+                    if(res.toString().replaceAll('"', '') == "SUCCESSFULLY_UPDATED"){
                       AssistantMethods.getUserData(context, await getUserId());
                       Navigator.pop(context);
                     }else{
