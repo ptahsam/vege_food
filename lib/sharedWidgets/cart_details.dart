@@ -72,7 +72,8 @@ class _CartDetailsState extends State<CartDetails> {
         child: Stack(
           children: [
             ListView.builder(
-              padding: EdgeInsets.only(top: 20.0),
+              physics: AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.only(top: 20.0, bottom: 200.0),
               itemCount: Provider.of<AppData>(context).userCart!.length,
               itemBuilder: (ctx, int index){
                 Cart cart = Provider.of<AppData>(context).userCart![index];
