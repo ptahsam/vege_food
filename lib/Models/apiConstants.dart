@@ -1,3 +1,3 @@
 class ApiConstants {
-  static String baseUrl = 'http://172.27.224.1:80/vege_food';
+  static String baseUrl = 'http://192.168.100.118:80/vege_food';
 }
