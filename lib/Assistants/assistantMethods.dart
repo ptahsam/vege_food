@@ -13,8 +13,9 @@ import 'package:vege_food/config/config.dart';
 
 class AssistantMethods {
 
-  static uploadUserProfile(File file) async {
+  static Future<String> uploadUserProfile(File file) async {
     var response = await RequestAssistant.uploadFile(file, await getUserId());
+    return response;
   }
 
   static Future<String> updateUserAddress(context, String field, String field_value, String userid) async{

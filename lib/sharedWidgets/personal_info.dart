@@ -430,8 +430,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
           ),
           SizedBox(height: 20.0,),
           InkWell(
-            onTap: (){
-              AssistantMethods.uploadUserProfile(userSelectedFile!);
+            onTap: () async {
+              String res = await AssistantMethods.uploadUserProfile(userSelectedFile!);
+              if(res == "SUCCESSFULLY_UPDATED"){
+                AssistantMethods.getUserData(context, await getUserId());
+                Navigator.pop(context);
+              }else{
+                displayToastMessage("An error occured. Please try again later.", context);
+              }
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
