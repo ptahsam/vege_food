@@ -14,10 +14,10 @@ class RequestAssistant
     http.StreamedResponse response = await request.send();
     var responseBytes = await response.stream.toBytes();
     var responseString = utf8.decode(responseBytes);
-    print('\n\n');
-    print('RESPONSE WITH HTTP');
-    print(responseString);
-    print('\n\n');
+    //print('\n\n');
+    //print('RESPONSE WITH HTTP');
+    //print(responseString);
+    //print('\n\n');
     return responseString;
   }
 

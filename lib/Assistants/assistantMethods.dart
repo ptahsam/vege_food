@@ -15,7 +15,6 @@ class AssistantMethods {
 
   static Future<String> uploadUserProfile(File file) async {
     var response = await RequestAssistant.uploadFile(file, await getUserId());
-    print(response);
     return response;
   }
 
