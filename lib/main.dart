@@ -33,6 +33,9 @@ class MyApp extends StatelessWidget {
             ),
             home: const NavBarScreen(),
             debugShowCheckedModeBanner: false,
+            /*routes: {
+              "/" : (BuildContext context) => NavBarScreen(),
+            },*/
           );
         },
       ),

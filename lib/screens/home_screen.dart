@@ -13,6 +13,7 @@ import 'package:vege_food/Models/category.dart';
 import 'package:vege_food/Models/product.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
+import 'package:vege_food/screens/navbar_screen.dart';
 import 'package:vege_food/sharedWidgets/cart_details.dart';
 import 'package:vege_food/sharedWidgets/category_items.dart';
 import 'package:vege_food/sharedWidgets/product_details.dart';
@@ -101,42 +102,48 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  Stack(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(8.0),
-                        margin: EdgeInsets.only(right: 15.0, top: 10.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.shopping_basket,
-                          size: 28.0,
-                          color: Palette.primaryColor,
-                        ),
-                      ),
-                      Positioned(
-                        right: 5.0,
-                        top: 5.0,
-                        child: Provider.of<AppData>(context).userOrder != null?Container(
-                          height: 25,
-                          width: 25,
+                  InkWell(
+                    onTap: (){
+                      //Navigator.pushReplacementNamed(context, '/');
+                      //Navigator.push(context, PageTransition(child: NavBarScreen(isNavigate: true, navigateIndex: 1,), type: PageTransitionType.rightToLeft));
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          margin: EdgeInsets.only(right: 15.0, top: 10.0),
                           decoration: BoxDecoration(
+                            color: Colors.white,
                             shape: BoxShape.circle,
-                            color: Colors.red,
                           ),
-                          child: Center(
-                            child: Text(
-                              Provider.of<AppData>(context).userOrder!.length.toString(),
-                              style: TextStyle(
-                                color: Colors.white,
+                          child: Icon(
+                            Icons.shopping_basket,
+                            size: 28.0,
+                            color: Palette.primaryColor,
+                          ),
+                        ),
+                        Positioned(
+                          right: 5.0,
+                          top: 5.0,
+                          child: Provider.of<AppData>(context).userOrder != null?Container(
+                            height: 25,
+                            width: 25,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                            child: Center(
+                              child: Text(
+                                Provider.of<AppData>(context).userOrder!.length.toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
-                        ):SizedBox.shrink(),
-                      ),
-                    ],
+                          ):SizedBox.shrink(),
+                        ),
+                      ],
+                    ),
                   ),
                   InkWell(
                     onTap: (){

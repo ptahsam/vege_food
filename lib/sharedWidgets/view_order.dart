@@ -1,6 +1,12 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/orderItem.dart';
@@ -40,11 +46,11 @@ class _ViewOrderState extends State<ViewOrder> {
             width: 30.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.white,
             ),
             child: Icon(
               Icons.close,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
@@ -324,6 +330,109 @@ class _ViewOrderState extends State<ViewOrder> {
                 ),
               ],
             ),
+          ),
+          InkWell(
+            onTap: () async {
+              String res = await AssistantMethods.generateOrder(context, widget.order.order_refno!, await getUserId());
+              Navigator.pop(context);
+              showModalBottomSheet(
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                ),
+                context: context,
+                builder: (context) => buildOrderDownload(res),
+              );
+              displayToastMessage(res, context);
+            },
+            child: Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(6.0),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.print,
+                      color: Colors.blue,
+                    ),
+                    iconSize: 22.0,
+                    onPressed: () => {},
+                  ),
+                ),
+                const SizedBox(width: 14.0,),
+                const Text(
+                  "Generate order",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildOrderDownload(String res) {
+    return Container(
+      padding: const EdgeInsets.only(left: 12.0, top: 30.0, right: 12.0, bottom: 50.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  res,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              SizedBox(width: 5.0,),
+              InkWell(
+                onTap: () async {
+                  Map<Permission, PermissionStatus> statuses = await [
+                    Permission.storage,
+                    //add more permission to request here.
+                  ].request();
+
+                  if(statuses[Permission.storage]!.isGranted){
+                    Directory directory = (await getExternalStorageDirectories(type: StorageDirectory.downloads))!.first;
+                    if(directory != null){
+                      String savePath =  directory.path + "/${res}";
+                      //output:  /storage/emulated/0/Download/banner.png
+
+                      try {
+                        await Dio().download(
+                            "${ApiConstants.baseUrl}/reports/${res}",
+                            savePath,
+                            onReceiveProgress: (received, total) {
+                              if (total != -1) {
+                                print((received / total * 100).toStringAsFixed(0) + "%");
+                                //you can build progressbar feature too
+                              }
+                            });
+                        print("File is saved to download folder.");
+                      } on DioError catch (e) {
+                        print(e.message);
+                      }
+                    }
+                  }else{
+                    print("No permission to read and write.");
+                  }
+                },
+                child: Icon(
+                  Icons.download,
+                ),
+              ),
+            ],
           ),
         ],
       ),

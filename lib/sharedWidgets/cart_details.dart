@@ -34,7 +34,7 @@ class _CartDetailsState extends State<CartDetails> {
             width: 30.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.white,
             ),
             child: Icon(
               Icons.close,

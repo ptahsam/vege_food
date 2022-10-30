@@ -9,7 +9,14 @@ import 'package:vege_food/screens/screens.dart';
 import '../sharedWidgets/widgets.dart';
 
 class NavBarScreen extends StatefulWidget {
-  const NavBarScreen({Key? key}) : super(key: key);
+  static const String idScreen = "NavScreen";
+  final bool isNavigate;
+  final int navigateIndex;
+  const NavBarScreen({
+    Key? key,
+    this.isNavigate = false,
+    this.navigateIndex = 0
+  }) : super(key: key);
 
   @override
   State<NavBarScreen> createState() => _NavBarScreenState();
@@ -47,8 +54,16 @@ class _NavBarScreenState extends State<NavBarScreen> {
     getUserData();
     getOrderItems();
     getCartItems();
+    checkIsNavigate();
   }
 
+  void checkIsNavigate(){
+    if(widget.isNavigate){
+      setState(() {
+        _selectedIndex = widget.navigateIndex;
+      });
+    }
+  }
 
   getUserData() async{
     Future.delayed(Duration.zero,()

@@ -91,22 +91,16 @@ class _OrderScreenState extends State<OrderScreen> {
                     ),
                   ),
                   SizedBox(height: 10.0,),
-                  InkWell(
-                    onTap: (){
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Palette.primaryColor,
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      child: Text(
-                        "Begin Shopping",
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w500,
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      "To create orders, First add items to cart then make your order.",
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500,
+                        color: Palette.textColor1,
                       ),
                     ),
                   ),
