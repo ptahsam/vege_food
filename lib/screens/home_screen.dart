@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> categories = [];
+  PageController pageController = PageController(viewportFraction: 0.85);
+  var _currPageValue = 0.0;
+  double _scaleFactor = 0.8;
+  double _cardHeight = 300.0;
 
   @override
   void didUpdateWidget(covariant HomeScreen oldWidget) {
@@ -45,6 +50,18 @@ class _HomeScreenState extends State<HomeScreen> {
     AssistantMethods.getAllProducts(context);
     AssistantMethods.getAllCategories(context);
     AssistantMethods.getTopProducts(context);
+    pageController.addListener(() {
+      setState(() {
+        _currPageValue = pageController.page!;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    pageController.dispose();
   }
 
   @override
@@ -310,6 +327,68 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }
                   ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 20.0),
+                      padding: EdgeInsets.only(top: 20),
+                      height: 400,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Palette.accentColor.withOpacity(0.4),
+                        border: Border(
+                          top: BorderSide(
+                            color: Palette.greyBorder,
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      child: PageView.builder(
+                        controller: pageController,
+                        itemCount: 5,
+                        itemBuilder: (context, position){
+                          return _buildPageItem(position);
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      left: 12.0,
+                      top: 5,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 3.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Text(
+                          "Quick Orders",
+                          style: TextStyle(
+                            color: Palette.primaryColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 22.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 0.0,
+                      right: 0.0,
+                      bottom: 0.0,
+                      child: DotsIndicator(
+                        dotsCount: 5,
+                        position: _currPageValue,
+                        decorator: DotsDecorator(
+                          size: Size.square(9.0),
+                          activeSize: Size(18.0, 9.0),
+                          activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                          activeColor: Palette.primaryColor.withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SliverToBoxAdapter(
@@ -609,5 +688,203 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget _buildPageItem(int index){
+    Matrix4 matrix = Matrix4.identity();
+    if(index == _currPageValue.floor()) {
+      var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
+      var currTrans = _cardHeight * (1 - currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
+    }else if(index == _currPageValue.floor() + 1){
+      var currScale = _scaleFactor + (_currPageValue - index + 1) * (1 - _scaleFactor);
+      var currTrans = _cardHeight * (1 - currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1);
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
+    }else if(index == _currPageValue.floor() - 1){
+      var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
+      var currTrans = _cardHeight * (1 - currScale) / 2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1);
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
+    }else{
+      var currScale = 0.8;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, _cardHeight * (1 - _scaleFactor) / 2, 0);
+    }
+
+    return Transform(
+      transform: matrix,
+      child: Stack(
+        children: [
+          Provider.of<AppData>(context).productList != null?Container(
+            height: 250,
+            margin: EdgeInsets.only(left: 10, right: 10.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              color: index.isEven?Palette.orange1.withOpacity(0.5):Palette.primaryColor.withOpacity(0.5),
+              image: DecorationImage(
+                fit: BoxFit.contain,
+                image: ExtendedNetworkImageProvider(
+                  "${ApiConstants.baseUrl}/images/products/${Provider.of<AppData>(context).productList![index].product_photo!}",
+                ),
+              ),
+            ),
+          ):SizedBox.shrink(),
+          Provider.of<AppData>(context).productList != null?Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 150.0,
+              margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white.withOpacity(0.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFFe8e8e8),
+                    blurRadius: 5.0,
+                    offset: Offset(0, 5),
+                  ),
+                  BoxShadow(
+                    color: Colors.white,
+                    offset: Offset(-5, 0),
+                  ),
+                  BoxShadow(
+                    color: Colors.white,
+                    offset: Offset(5, 0),
+                  ),
+                ],
+              ),
+              child: Container(
+                padding: EdgeInsets.only(top: 10, left: 15.0, right: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      Provider.of<AppData>(context).productList![index].product_name!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        color: Colors.blueGrey,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Row(
+                      children: [
+                        Wrap(
+                          children: List.generate(
+                            5, (position) {
+                              return Icon(
+                                Icons.star,
+                                color: Palette.primaryColor.withOpacity(0.5),
+                                size: 15.0,
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10.0,),
+                        Text(
+                          "4.5",
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            color: Color(0xFFccc7c5),
+                            fontSize: 12.0,
+                            height: 1.2,
+                          ),
+                        ),
+                        SizedBox(width: 10.0,),
+                        Text(
+                          "209",
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            color: Color(0xFFccc7c5),
+                            fontSize: 12.0,
+                            height: 1.2,
+                          ),
+                        ),
+                        SizedBox(width: 5.0,),
+                        Text(
+                          "comments",
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            color: Color(0xFFccc7c5),
+                            fontSize: 12.0,
+                            height: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.0,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.circle_sharp,
+                              color: Palette.primaryColor.withOpacity(0.5),
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(
+                              "Available",
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                color: Color(0xFFccc7c5),
+                                fontSize: 12.0,
+                                height: 1.2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: Palette.icon1.withOpacity(0.5),
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(
+                              "1.74km",
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                color: Color(0xFFccc7c5),
+                                fontSize: 12.0,
+                                height: 1.2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.access_time_rounded,
+                              color: Palette.icon2,
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(
+                              "32min",
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                color: Color(0xFFccc7c5),
+                                fontSize: 12.0,
+                                height: 1.2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ):SizedBox.shrink(),
+        ],
+      ),
+    );
+  }
+
 }
+
+
 
