@@ -95,12 +95,12 @@ class _OrderScreenState extends State<OrderScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       "To create orders, First add items to cart then make your order.",
-                      maxLines: 2,
+                      maxLines: 3,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
-                        color: Palette.textColor1,
+                        color: Palette.textColor2,
                       ),
                     ),
                   ),

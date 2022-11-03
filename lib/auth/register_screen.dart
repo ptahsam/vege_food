@@ -73,7 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 18.0,
-                        color: Palette.textColor1
+                        color: Palette.textColor2
                     ),
                   ),
                 ),
