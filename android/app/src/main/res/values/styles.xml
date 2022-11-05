@@ -4,18 +4,7 @@
     <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <!-- Show a splash screen on the activity. Automatically removed when
              Flutter draws its first frame -->
-        <item name="android:windowBackground">
-            <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-                <item android:drawable="@android:color/black" />
-
-                <!-- You can insert your own image assets here -->
-                <!--<item>
-                    <bitmap
-                        android:gravity="center"
-                        android:src="@mipmap/ic_launcher" />
-                </item>-->
-            </layer-list>
-        </item>
+        <item name="android:windowBackground">@drawable/launch_background</item>
     </style>
     <!-- Theme applied to the Android Window as soon as the process has started.
          This theme determines the color of the Android Window while your
