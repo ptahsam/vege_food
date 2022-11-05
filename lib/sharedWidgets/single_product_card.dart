@@ -54,8 +54,8 @@ class SingleProductCard extends StatelessWidget {
                     child: Text(
                       product.product_description!,
                       style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w200,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w400,
                         color: Palette.textColor1,
                       ),
                       overflow: TextOverflow.ellipsis,
@@ -87,7 +87,7 @@ class SingleProductCard extends StatelessWidget {
                           "KES.${product.product_price!}",
                           style: TextStyle(
                               fontSize: 16.0,
-                              fontWeight: FontWeight.w100,
+                              fontWeight: FontWeight.w400,
                               color: Colors.redAccent
                           ),
                         ),
