@@ -213,7 +213,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             }else if(response == "LOGGED_IN"){
                               User user = Provider.of<AppData>(context, listen: false).user!;
                               saveUserId(user.id!.toString());
-                              Navigator.pop(context, "LOGGED_IN");
+                              AssistantMethods.getUserCartItems(context, await getUserId());
+                              AssistantMethods.getUserOrderItems(context, await getUserId());
+                              Navigator.pop(context);
                             }else{
                               setState(() {
                                 isLoggingIn = false;
