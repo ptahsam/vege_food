@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
 import 'package:vege_food/auth/login_screen.dart';
+import 'package:vege_food/auth/sign_in_google.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 
@@ -273,32 +275,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 8.0,),
-                margin: EdgeInsets.only(top: 20.0),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
-                    color: Palette.greyBorder,
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.push(context, PageTransition(child: SignInGoogle(), type: PageTransitionType.rightToLeft));
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.0,),
+                  margin: EdgeInsets.only(top: 20.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.0,
+                      color: Palette.greyBorder,
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      MdiIcons.google,
-                    ),
-                    SizedBox(width: 10.0,),
-                    Text(
-                      "Sign up with google",
-                      style: TextStyle(
-                        color: Palette.black6,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        MdiIcons.google,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 10.0,),
+                      Text(
+                        "Sign up with google",
+                        style: TextStyle(
+                          color: Palette.black6,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
