@@ -43,6 +43,10 @@ class _SignInGoogleState extends State<SignInGoogle> {
       saveUserId(user.id!.toString());
       await _googleSignIn.disconnect();
       Navigator.pop(context, "LOGGED_IN");
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
+      await _googleSignIn.disconnect();
+      Navigator.pop(context, "LOGGED_IN");
     }
   }
 
