@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "568651673508",
+    "project_id": "vegefood-5c590",
+    "storage_bucket": "vegefood-5c590.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568651673508:android:67ec208bf6a3a2c67d9b31",
+        "android_client_info": {
+          "package_name": "com.vegefood.com.vege_food"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568651673508-75dh3b3kqjk5hfo74dcqi0t6el6n41d7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vegefood.com.vege_food",
+            "certificate_hash": "f2b026e5fed58c2684f6694327fcedcc67a2eba9"
+          }
+        },
+        {
+          "client_id": "568651673508-q84qb4me0mk9213j39gfrt7t1uaq575j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATY9MIyU1XBFmQTKnw-La-oIhHWb8Wvsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568651673508-q84qb4me0mk9213j39gfrt7t1uaq575j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
