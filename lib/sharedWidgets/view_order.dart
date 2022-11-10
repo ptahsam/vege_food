@@ -335,14 +335,14 @@ class _ViewOrderState extends State<ViewOrder> {
             onTap: () async {
               String res = await AssistantMethods.generateOrder(context, widget.order.order_refno!, await getUserId());
               Navigator.pop(context);
-              showModalBottomSheet(
+              /*showModalBottomSheet(
                 isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
                 ),
                 context: context,
                 builder: (context) => buildOrderDownload(res),
-              );
+              );*/
               displayToastMessage(res, context);
             },
             child: Row(
@@ -364,7 +364,7 @@ class _ViewOrderState extends State<ViewOrder> {
                 ),
                 const SizedBox(width: 14.0,),
                 const Text(
-                  "Generate order",
+                  "Generate and email order",
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,

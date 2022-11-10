@@ -305,7 +305,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: 20.0,),
             InkWell(
               onTap: () async {
-                Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
+                var res = await Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
+                  if(res == "LOGGED_IN"){
+                    AssistantMethods.getUserCartItems(context, await getUserId());
+                    AssistantMethods.getUserOrderItems(context, await getUserId());
+                  }
                 },
               child: Center(
                 child: Container(

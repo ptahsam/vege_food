@@ -46,15 +46,13 @@ class _SignInGoogleState extends State<SignInGoogle> {
             .of<AppData>(context, listen: false)
             .user!;
         saveUserId(user.id!.toString());
-        AssistantMethods.getUserCartItems(context, await getUserId());
-        AssistantMethods.getUserOrderItems(context, await getUserId());
         await _googleSignIn.disconnect();
         Navigator.pop(context, "LOGGED_IN");
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(res)));
         await _googleSignIn.disconnect();
-        Navigator.pop(context, "LOGGED_IN");
+        Navigator.pop(context);
       }
     }
   }
