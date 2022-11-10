@@ -148,7 +148,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 Navigator.push(context, PageTransition(child: ViewUserPhoto(user: user,), type: PageTransitionType.rightToLeft));
                               },
                               child: Image.network(
-                                "${ApiConstants.baseUrl}/images/profiles/${user.user_photo!}",
+                                user.user_photo!.contains("https")?user.user_photo!:"${ApiConstants.baseUrl}/images/profiles/${user.user_photo!}",
                                 height: 100.0,
                                 width: 100.0,
                                 fit: BoxFit.cover,

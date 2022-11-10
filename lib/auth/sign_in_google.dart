@@ -36,11 +36,12 @@ class _SignInGoogleState extends State<SignInGoogle> {
   }
 
   updateSignIn() async {
-    String res = await AssistantMethods.googleSignIn(context, googleSignInAccount!.displayName!??"", googleSignInAccount!.email, googleSignInAccount!.photoUrl??"");
+    String res = await AssistantMethods.googleSignIn(context, googleSignInAccount!.displayName??"", googleSignInAccount!.email, googleSignInAccount!.photoUrl??"");
     print(res);
     if(res == "LOGGED_IN"){
       User user = Provider.of<AppData>(context, listen: false).user!;
       saveUserId(user.id!.toString());
+      await _googleSignIn.disconnect();
       Navigator.pop(context, "LOGGED_IN");
     }
   }
@@ -54,7 +55,7 @@ class _SignInGoogleState extends State<SignInGoogle> {
       });
       updateSignIn();
     });
-    _googleSignIn.signInSilently();
+    //_googleSignIn.signInSilently();
     super.initState();
     _handleSignIn();
   }

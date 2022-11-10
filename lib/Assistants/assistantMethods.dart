@@ -116,7 +116,7 @@ class AssistantMethods {
     var params = {
       'googleSignIn': '1',
       'name': '$name',
-      'email': '$name',
+      'email': '$email',
       'photo': '$photo',
     };
 

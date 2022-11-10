@@ -37,7 +37,7 @@ class _ViewUserPhotoState extends State<ViewUserPhoto> {
           alignment: Alignment.center,
           child: Center(
             child: Image.network(
-              "${ApiConstants.baseUrl}/images/profiles/${widget.user.user_photo!}",
+              widget.user.user_photo!.contains("https")?widget.user.user_photo!:"${ApiConstants.baseUrl}/images/profiles/${widget.user.user_photo!}",
               loadingBuilder: (BuildContext context, Widget child,
                   ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) {
