@@ -160,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 subtitle: Text(
-                  "${user.address!.address!}, ${user.address!.county!}, ${user.address!.city}",
+                  "${user.address!.address!=""||user.address!.address!=null?user.address!.address!+", ":""}${user.address!.county!=""||user.address!.county!=null?user.address!.county!+", ":""}${user.address!.city!=""||user.address!.city!=null?user.address!.city!:""}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
