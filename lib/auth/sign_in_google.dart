@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:vege_food/Assistants/assistantMethods.dart';
+import 'package:vege_food/DataHandler/appdata.dart';
+import 'package:vege_food/Models/user.dart';
+import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 
 class SignInGoogle extends StatefulWidget {
@@ -30,8 +35,14 @@ class _SignInGoogleState extends State<SignInGoogle> {
     },);
   }
 
-  updateSignIn(){
-    print(googleSignInAccount);
+  updateSignIn() async {
+    String res = await AssistantMethods.googleSignIn(context, googleSignInAccount!.displayName!??"", googleSignInAccount!.email, googleSignInAccount!.photoUrl??"");
+    print(res);
+    if(res == "LOGGED_IN"){
+      User user = Provider.of<AppData>(context, listen: false).user!;
+      saveUserId(user.id!.toString());
+      Navigator.pop(context, "LOGGED_IN");
+    }
   }
 
   @override

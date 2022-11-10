@@ -111,6 +111,29 @@ class AssistantMethods {
     }
   }
 
+  static Future<String> googleSignIn(context, String name, String email, String photo) async {
+    String data = "";
+    var params = {
+      'googleSignIn': '1',
+      'name': '$name',
+      'email': '$name',
+      'photo': '$photo',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    if(response.toString() != "failed" && response.toString() != "UNKNOWN_ERROR" && response.toString() != ""){
+
+      User user = User.fromJson(response);
+
+      Provider.of<AppData>(context, listen: false).updateUser(user, true);
+      data = "LOGGED_IN";
+    }else{
+      data = response.toString();
+    }
+    return data;
+  }
+
   static Future<String> loginUser(context, String identifier, String password) async{
     String data = "";
     var params = {

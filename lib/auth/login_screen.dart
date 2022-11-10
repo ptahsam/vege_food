@@ -245,6 +245,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               InkWell(
                 onTap: (){
+                  Navigator.pop(context);
                   Navigator.push(context, PageTransition(child: SignInGoogle(), type: PageTransitionType.rightToLeft));
                 },
                 child: Container(
