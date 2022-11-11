@@ -73,7 +73,7 @@ class _CategoryItemsState extends State<CategoryItems> {
               onPressed: (){
                 showSearch(
                     context: context,
-                    delegate: CustomSearchDelegate()
+                    delegate: CustomSearchDelegate(Provider.of<AppData>(context).categoryProductsList!)
                 );
               },
               icon: Icon(
@@ -118,17 +118,9 @@ class _CategoryItemsState extends State<CategoryItems> {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
-// Demo list to show querying
-  List<String> searchTerms = [
-    "Apple",
-    "Banana",
-    "Mango",
-    "Pear",
-    "Watermelons",
-    "Blueberries",
-    "Pineapples",
-    "Strawberries"
-  ];
+  final List<Product> searchTerms;
+
+  CustomSearchDelegate(this.searchTerms);
 
 // first overwrite to
 // clear the search text
@@ -159,9 +151,9 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    for (var product in searchTerms) {
+      if (product.product_name!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(product.product_name!);
       }
     }
     return ListView.builder(
@@ -180,9 +172,9 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    for (var product in searchTerms) {
+      if (product.product_name!.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(product.product_name!);
       }
     }
     return ListView.builder(
