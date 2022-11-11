@@ -8,8 +8,8 @@ import 'package:vege_food/screens/navbar_screen.dart';
 void main() {
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Palette.primaryColor.withOpacity(0.5), // navigation bar color
-    statusBarColor: Palette.primaryColor.withOpacity(0.5), // status bar color
+    systemNavigationBarColor: Palette.primaryColor, // navigation bar color
+    statusBarColor: Palette.primaryColor, // status bar color
   ));
 }
 

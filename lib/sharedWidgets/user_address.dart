@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -87,6 +88,11 @@ class _UserAddressState extends State<UserAddress> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              systemNavigationBarColor: Palette.primaryColor, // navigation bar color
+              statusBarColor: Palette.primaryColor,
+              statusBarBrightness: Brightness.light
+            ),
             backgroundColor: Colors.white,
             shadowColor: Colors.transparent,
             leading: InkWell(
