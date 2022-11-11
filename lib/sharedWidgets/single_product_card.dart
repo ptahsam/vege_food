@@ -15,6 +15,7 @@ class SingleProductCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 10.0),
       decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(5.0),
         border: Border.all(
           width: 1.0,
