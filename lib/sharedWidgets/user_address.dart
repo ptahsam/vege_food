@@ -88,11 +88,6 @@ class _UserAddressState extends State<UserAddress> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            systemOverlayStyle: SystemUiOverlayStyle(
-              systemNavigationBarColor: Palette.orange1.withOpacity(0.7), // navigation bar color
-              statusBarColor: Palette.orange1.withOpacity(0.7),
-              statusBarBrightness: Brightness.light
-            ),
             backgroundColor: Colors.white,
             shadowColor: Colors.transparent,
             leading: InkWell(
