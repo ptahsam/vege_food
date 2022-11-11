@@ -23,7 +23,7 @@ class SingleProductCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Palette.textColor1.withOpacity(0.6),
+            color: Palette.orange1.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 1,
             offset: Offset(0, 1), // changes position of shadow
