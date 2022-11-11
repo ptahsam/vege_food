@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/config/colorMap.dart';
@@ -6,6 +7,10 @@ import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/screens/navbar_screen.dart';
 void main() {
   runApp(const MyApp());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: Palette.primaryColor, // navigation bar color
+    statusBarColor: Palette.primaryColor, // status bar color
+  ));
 }
 
 class MyApp extends StatelessWidget {
