@@ -8,3 +8,5 @@ export 'personal_info.dart';
 export 'search_page.dart';
 export 'user_address.dart';
 export 'view_user_photo.dart';
+export 'paypal_services.dart';
+export 'paypal_payment.dart';

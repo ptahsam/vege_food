@@ -281,6 +281,40 @@ class _ViewOrderState extends State<ViewOrder> {
                 },
               ),
             ),
+            InkWell(
+              onTap: (){
+                Navigator.push(context, PageTransition(
+                  child: PaypalPayment(onFinish: (number) async {
+                  print('order id: '+number);
+                },), type: PageTransitionType.rightToLeft));
+              },
+              child: Container(
+                width: (MediaQuery.of(context).size.width) - 24,
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25.0),
+                  color: Palette.primaryColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Palette.textColor1.withOpacity(0.6),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                      offset: Offset(0, 1), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    "Make Payment",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

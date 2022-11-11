@@ -54,6 +54,8 @@ dependencies:
   dots_indicator: ^2.1.0
   google_sign_in: ^5.4.2
   loading_animation_widget: ^1.2.0+3
+  http_auth: ^1.0.1
+  webview_flutter: ^3.0.4
 
 dev_dependencies:
   flutter_test:
