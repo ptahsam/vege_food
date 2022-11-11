@@ -151,10 +151,10 @@ class CustomSearchDelegate extends SearchDelegate {
 // third overwrite to show query result
   @override
   Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
+    List<Product> matchQuery = [];
     for (var product in searchTerms) {
       if (product.product_name!.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(product.product_name!);
+        matchQuery.add(product);
       }
     }
     return ListView.builder(
@@ -162,7 +162,7 @@ class CustomSearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         var result = matchQuery[index];
         return ListTile(
-          title: Text(result),
+          title: Text(result.product_name!),
         );
       },
     );
@@ -172,18 +172,26 @@ class CustomSearchDelegate extends SearchDelegate {
 // querying process at the runtime
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
+    List<Product> matchQuery = [];
+
     for (var product in searchTerms) {
       if (product.product_name!.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(product.product_name!);
+        matchQuery.add(product);
       }
     }
+
     return ListView.builder(
       itemCount: matchQuery.length,
       itemBuilder: (context, index) {
         var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
+        return InkWell(
+          onTap: (){
+            Navigator.pop(context);
+            Navigator.push(context, PageTransition(child: ProductDetails(product: result,), type: PageTransitionType.rightToLeft));
+          },
+          child: ListTile(
+          title: Text(result.product_name!),
+          ),
         );
       },
     );
