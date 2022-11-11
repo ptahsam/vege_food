@@ -40,6 +40,7 @@ class _CategoryItemsState extends State<CategoryItems> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shadowColor: Colors.transparent,
         leading: InkWell(
           onTap: (){
             Navigator.pop(context);
@@ -65,6 +66,16 @@ class _CategoryItemsState extends State<CategoryItems> {
           ),
         ),
         centerTitle: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0, top: 10.0, bottom: 10.0),
+            child: Icon(
+              Icons.search_rounded,
+              size: 26.0,
+              color: Colors.white,
+            ),
+          ),
+        ],
         flexibleSpace: FlexibleSpaceBar(
           background: ExtendedImage.network(
             "${ApiConstants.baseUrl}/images/categories/${widget.category.category_image!}",
