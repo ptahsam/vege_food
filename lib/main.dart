@@ -7,9 +7,9 @@ import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/screens/navbar_screen.dart';
 void main() {
   runApp(const MyApp());
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor: Palette.primaryColor, // navigation bar color
-    statusBarColor: Palette.primaryColor, // status bar color
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Palette.primaryColor.withOpacity(0.5), // navigation bar color
+    statusBarColor: Palette.primaryColor.withOpacity(0.5), // status bar color
   ));
 }
 
@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'VegeFood',
             theme: ThemeData(
+              appBarTheme: AppBarTheme(
+                systemOverlayStyle: SystemUiOverlayStyle.light, // 2
+              ),
               visualDensity: VisualDensity.adaptivePlatformDensity,
               primarySwatch: MaterialColor(0xFF2DCE89, color),
               textTheme:
