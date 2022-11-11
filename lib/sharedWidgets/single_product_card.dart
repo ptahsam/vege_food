@@ -20,6 +20,14 @@ class SingleProductCard extends StatelessWidget {
           width: 1.0,
           color: Palette.greyBorder,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Palette.textColor1.withOpacity(0.6),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(0, 1), // changes position of shadow
+          ),
+        ],
       ),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
