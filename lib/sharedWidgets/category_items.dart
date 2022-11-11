@@ -71,9 +71,10 @@ class _CategoryItemsState extends State<CategoryItems> {
             padding: const EdgeInsets.only(right: 12.0, top: 10.0, bottom: 10.0),
             child: IconButton(
               onPressed: (){
+                List<Product> listProduct = Provider.of<AppData>(context, listen: false).categoryProductsList!;
                 showSearch(
                     context: context,
-                    delegate: CustomSearchDelegate(Provider.of<AppData>(context).categoryProductsList!)
+                    delegate: CustomSearchDelegate(listProduct)
                 );
               },
               icon: Icon(
