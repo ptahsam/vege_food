@@ -89,8 +89,8 @@ class _UserAddressState extends State<UserAddress> {
         slivers: [
           SliverAppBar(
             systemOverlayStyle: SystemUiOverlayStyle(
-              systemNavigationBarColor: Palette.primaryColor, // navigation bar color
-              statusBarColor: Palette.primaryColor,
+              systemNavigationBarColor: Palette.orange1.withOpacity(0.7), // navigation bar color
+              statusBarColor: Palette.orange1.withOpacity(0.7),
               statusBarBrightness: Brightness.light
             ),
             backgroundColor: Colors.white,
