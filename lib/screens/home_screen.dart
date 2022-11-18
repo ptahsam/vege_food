@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
   displayInternetCard(){
     Future.delayed(Duration.zero,()
     {
-      if(Provider.of<AppData>(context, listen: true).isoffline) {
+      if(Provider.of<AppData>(context, listen: false).isoffline) {
         displayToastMessage("No internet connection", context);
       }else{
         displayToastMessage("Internet connection restored", context);
