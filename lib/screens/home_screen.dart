@@ -55,6 +55,25 @@ class _HomeScreenState extends State<HomeScreen> {
         _currPageValue = pageController.page!;
       });
     });
+    getInternetConnection(context);
+    displayInternetCard();
+  }
+
+  displayInternetCard(){
+    Future.delayed(Duration.zero,()
+    {
+      if(Provider.of<AppData>(context).isoffline) {
+        showModalBottomSheet(
+          isScrollControlled: true,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)),
+          ),
+          context: context,
+          builder: (context) => buildOfflineCard(),
+        );
+      }
+    });
   }
 
   @override
@@ -62,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement dispose
     super.dispose();
     pageController.dispose();
+    internetconnection! .cancel();
   }
 
   @override

@@ -16,6 +16,7 @@ class AppData extends ChangeNotifier
   List<Order>? userOrder;
   List<OrderItem>? orderItem;
   User? user;
+  bool isoffline = false;
 
   void updateProductList(List<Product> listProduct)
   {
@@ -78,6 +79,12 @@ class AppData extends ChangeNotifier
     }else{
       user = null;
     }
+    notifyListeners();
+  }
+
+  void updateOfflineStatus(bool offlineStatus)
+  {
+    isoffline = offlineStatus;
     notifyListeners();
   }
 }
