@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
   displayInternetCard(){
     Future.delayed(Duration.zero,()
     {
-      if(Provider.of<AppData>(context).isoffline) {
+      if(Provider.of<AppData>(context, listen: true).isoffline) {
         showModalBottomSheet(
           isScrollControlled: true,
           shape: const RoundedRectangleBorder(
