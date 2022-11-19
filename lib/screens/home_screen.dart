@@ -361,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         controller: pageController,
                         itemCount: newMap.length,
                         itemBuilder: (context, position){
-                          return _buildPageItem(position);
+                          return _buildPageItem(position, newMap);
                         },
                       ),
                     ),
@@ -389,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       right: 0.0,
                       bottom: 0.0,
                       child: DotsIndicator(
-                        dotsCount: 5,
+                        dotsCount: newMap.length,
                         position: _currPageValue,
                         decorator: DotsDecorator(
                           size: Size.square(9.0),
@@ -700,7 +700,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildPageItem(int index){
+  Widget _buildPageItem(int index, Map<int?, List<Product>> newMap,){
     Matrix4 matrix = Matrix4.identity();
     if(index == _currPageValue.floor()) {
       var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
@@ -720,6 +720,11 @@ class _HomeScreenState extends State<HomeScreen> {
       var currScale = 0.8;
       matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, _cardHeight * (1 - _scaleFactor) / 2, 0);
     }
+
+    List pList = [];
+    newMap.forEach((k,v) => pList.add(v));
+
+    List<Product> productList = pList[index];
 
     return Transform(
       transform: matrix,
@@ -769,7 +774,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      Provider.of<AppData>(context).productList![index].product_name!,
+                      Provider.of<AppData>(context).productList![index].product_name!+productList.length.toString(),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
