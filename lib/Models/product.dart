@@ -12,7 +12,7 @@ class Product {
   Categories? productCategory;
   String? date_added;
 
-  Product({this.id, this.product_name, this.product_price, this.product_quantity, this.product_photo, this.product_description, this.productCategory, this.date_added});
+  Product({this.id, this.category_id, this.product_name, this.product_price, this.product_quantity, this.product_photo, this.product_description, this.productCategory, this.date_added});
 
   factory Product.fromJson(Map<String, dynamic> json) {
 
