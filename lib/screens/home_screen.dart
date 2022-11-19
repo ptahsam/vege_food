@@ -893,14 +893,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                            getTotalProductAmount(productList),
+                          "KES ${getTotalProductAmount(productList)}",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Palette.orange1,
+                          ),
                         ),
                         ElevatedButton(
                           onPressed: (){
 
                           },
                           child: Text(
-                            "Add ${productList.length} items to cart",
+                            "Add item${productList.length > 1?"s":""} to cart",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
                           ),
                         ),
                         /*Row(
