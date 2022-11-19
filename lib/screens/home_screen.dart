@@ -828,13 +828,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      Provider.of<AppData>(context).productList![index].product_name!+productList.length.toString(),
+                      "${productList.length == 1?productList[0].product_name!
+                          :productList.length == 2?productList[0].product_photo!+", "+ productList[1].product_photo!
+                          :productList.length >= 3?productList[0].product_photo!+", "+productList[1].product_photo!+", "+productList[2].product_photo!
+                          :""}",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
                         fontFamily: 'Roboto',
                         color: Colors.blueGrey,
-                        fontSize: 20.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
