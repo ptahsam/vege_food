@@ -389,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       right: 0.0,
                       bottom: 0.0,
                       child: DotsIndicator(
-                        dotsCount: newMap.length,
+                        dotsCount: newMap.length > 0?newMap.length:1,
                         position: _currPageValue,
                         decorator: DotsDecorator(
                           size: Size.square(9.0),
