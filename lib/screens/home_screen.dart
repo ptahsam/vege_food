@@ -893,13 +893,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "KES ${getTotalProductAmount(productList)}",
+                          "KES. ${getTotalProductAmount(productList)}",
                           style: TextStyle(
-                            fontSize: 18.0,
+                            fontSize: 17.0,
                             color: Palette.orange1,
                           ),
                         ),
                         ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Palette.primaryColor.withOpacity(0.7),
+                          ),
                           onPressed: (){
 
                           },
@@ -907,7 +910,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             "Add item${productList.length > 1?"s":""} to cart",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18.0,
                             ),
                           ),
                         ),
