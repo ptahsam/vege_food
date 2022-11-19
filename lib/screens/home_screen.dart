@@ -78,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
     bool isOffline = Provider.of<AppData>(context).isoffline;
     List<Product> pList = Provider.of<AppData>(context).productList!=null?Provider.of<AppData>(context).productList!:[];
     var newMap = groupBy(pList, (Product product) => product.category_id);
-    print(newMap);
     if(!isOffline){
       getData();
     }
@@ -360,7 +359,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: PageView.builder(
                         controller: pageController,
-                        itemCount: 5,
+                        itemCount: newMap.length,
                         itemBuilder: (context, position){
                           return _buildPageItem(position);
                         },
