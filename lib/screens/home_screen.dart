@@ -774,21 +774,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 Positioned.fill(
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
-                    fit: BoxFit.scaleDown,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Positioned(
                   left: 0,
+                  top: 40,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
-                    fit: BoxFit.scaleDown,
+                    width: (MediaQuery.of(context).size.width * 0.85)*0.5,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Positioned(
                   right: 0,
+                  top: 40,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[2].product_photo!}",
-                    fit: BoxFit.scaleDown,
+                    width: (MediaQuery.of(context).size.width * 0.85)*0.5,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ],
