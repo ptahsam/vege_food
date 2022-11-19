@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/Models/cart.dart';
 import 'package:vege_food/Models/orderItem.dart';
+import 'package:vege_food/Models/product.dart';
 
 StreamSubscription? internetconnection;
 
@@ -84,6 +85,15 @@ String getTotalOrderAmount(List<OrderItem> list) {
   for(var i = 0; i < list.length; i++){
     OrderItem orderItem = list[i];
     sum = (sum + (int.parse(orderItem.items_no!) * int.parse(orderItem.productItem!.product_price!))).toInt();
+  }
+  return sum.toString();
+}
+
+String getTotalProductAmount(List<Product> list) {
+  int sum = 0;
+  for(var i = 0; i < list.length; i++){
+    Product product = list[i];
+    sum = (sum + int.parse(product.product_price!)).toInt();
   }
   return sum.toString();
 }

@@ -842,7 +842,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(height: 10.0,),
-                    Row(
+                    /*Row(
                       children: [
                         Wrap(
                           children: List.generate(
@@ -886,12 +886,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ],
-                    ),
+                    ),*/
                     SizedBox(height: 20.0,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
+                        Text(
+                            getTotalProductAmount(productList),
+                        ),
+                        ElevatedButton(
+                          onPressed: (){
+
+                          },
+                          child: Text(
+                            "Add ${productList.length} items to cart",
+                          ),
+                        ),
+                        /*Row(
                           children: [
                             Icon(
                               Icons.circle_sharp,
@@ -908,8 +919,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ],
-                        ),
-                        Row(
+                        ),*/
+                       /* Row(
                           children: [
                             Icon(
                               Icons.location_on,
@@ -926,8 +937,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ],
-                        ),
-                        Row(
+                        ),*/
+                        /*Row(
                           children: [
                             Icon(
                               Icons.access_time_rounded,
@@ -944,7 +955,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ],
-                        ),
+                        ),*/
                       ],
                     ),
                   ],
