@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/product.dart';
+import 'package:vege_food/config/palette.dart';
 
 class ViewQuickOrders extends StatefulWidget {
   final List<Product> productList;
@@ -34,9 +35,9 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.5),
       appBar: AppBar(
         shadowColor: Colors.transparent,
+        backgroundColor: Colors.white,
         leading: InkWell(
           onTap: (){
             Navigator.pop(context);
@@ -81,11 +82,39 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
                       ),
                     ),
                     Positioned(
-                      top: 0,
+                      top: 20,
                       left: 12.0,
                       right: 12.0,
                       child: Text(
                         product.product_name!,
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Colors.blueGrey
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: ((MediaQuery.of(context).size.height)*0.5)-100.0,
+                      left: 12.0,
+                      right: 12.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "KES. ${product.product_price}",
+                            style: TextStyle(
+                              fontSize: 17.0,
+                              color: Palette.orange1,
+                            ),
+                          ),
+                          Text(
+                            "Available ${product.product_quantity}",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Palette.textColor2,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
