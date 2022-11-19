@@ -769,7 +769,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ],
-            ):productList.length == 2?Stack(
+            ):productList.length >= 3?Stack(
               children: [
                 Positioned.fill(
                   child: ExtendedImage.network(
