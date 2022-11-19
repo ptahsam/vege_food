@@ -34,18 +34,66 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          PageView.builder(
-            itemCount: itemsNo,
-            itemBuilder: (ctx, int position){
-              Product product = widget.productList[position];
-              return ExtendedImage.network(
-                "${ApiConstants.baseUrl}/images/products/${product.product_photo!}",
-              );
+      backgroundColor: Colors.black.withOpacity(0.5),
+      appBar: AppBar(
+        shadowColor: Colors.transparent,
+        leading: InkWell(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: Container(
+            margin: EdgeInsets.only(left: 12.0),
+            height: 30.0,
+            width: 30.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.black.withOpacity(0.5),
+            ),
+            child: Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: (){
+
             },
+            child: Text(
+              "Add item${widget.productList.length > 1?"s":""} to cart",
+            ),
           ),
         ],
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            PageView.builder(
+              itemCount: itemsNo,
+              itemBuilder: (ctx, int position){
+                Product product = widget.productList[position];
+                return Stack(
+                  children: [
+                    Positioned.fill(
+                      child: ExtendedImage.network(
+                        "${ApiConstants.baseUrl}/images/products/${product.product_photo!}",
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      left: 12.0,
+                      right: 12.0,
+                      child: Text(
+                        product.product_name!,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
