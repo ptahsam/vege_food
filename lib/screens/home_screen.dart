@@ -754,14 +754,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: 0,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
-                    width: double.infinity * 0.5,
                   ),
                 ),
                 productList.length > 2?Positioned(
                   right: 0,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[2].product_photo!}",
-                    width: double.infinity * 0.5,
                   ),
                 ):SizedBox.shrink(),
               ],
