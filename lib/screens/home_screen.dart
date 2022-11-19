@@ -779,19 +779,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Positioned(
                   left: 0,
-                  top: 40,
+                  bottom: 20,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
-                    width: (MediaQuery.of(context).size.width * 0.85)*0.5,
+                    width: (MediaQuery.of(context).size.width * 0.90)*0.5,
                     fit: BoxFit.contain,
                   ),
                 ),
                 Positioned(
                   right: 0,
-                  top: 40,
+                  bottom: 20,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[2].product_photo!}",
-                    width: (MediaQuery.of(context).size.width * 0.85)*0.5,
+                    width: (MediaQuery.of(context).size.width * 0.90)*0.5,
                     fit: BoxFit.contain,
                   ),
                 ),
