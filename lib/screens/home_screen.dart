@@ -736,32 +736,61 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.0),
               color: index.isEven?Palette.orange1.withOpacity(0.5):Palette.primaryColor.withOpacity(0.5),
-              image: productList.length == 1?DecorationImage(
+              /*image: productList.length == 1?DecorationImage(
                 fit: BoxFit.contain,
                 image: ExtendedNetworkImageProvider(
                   "${ApiConstants.baseUrl}/images/products/${Provider.of<AppData>(context).productList![index].product_photo!}",
                 ),
-              ):null,
+              ):null,*/
             ),
-            child: productList.length > 1?Stack(
+            child: productList.length == 1?Stack(
               children: [
                 Positioned.fill(
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ],
+            ):productList.length == 2?Stack(
+              children: [
+                Positioned(
+                  left: 0,
+                  child: ExtendedImage.network(
+                    "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  child: ExtendedImage.network(
+                    "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ],
+            ):productList.length == 2?Stack(
+              children: [
+                Positioned.fill(
+                  child: ExtendedImage.network(
+                    "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Positioned(
                   left: 0,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
+                    fit: BoxFit.contain,
                   ),
                 ),
-                productList.length > 2?Positioned(
+                Positioned(
                   right: 0,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[2].product_photo!}",
+                    fit: BoxFit.contain,
                   ),
-                ):SizedBox.shrink(),
+                ),
               ],
             ):SizedBox.shrink(),
           ):SizedBox.shrink(),
