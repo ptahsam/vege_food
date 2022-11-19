@@ -10,3 +10,4 @@ export 'user_address.dart';
 export 'view_user_photo.dart';
 export 'paypal_services.dart';
 export 'paypal_payment.dart';
+export 'view_quick_orders.dart';

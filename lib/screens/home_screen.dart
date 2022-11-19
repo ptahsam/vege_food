@@ -21,6 +21,7 @@ import 'package:vege_food/sharedWidgets/category_items.dart';
 import 'package:vege_food/sharedWidgets/product_details.dart';
 import 'package:vege_food/sharedWidgets/search_page.dart';
 import 'package:vege_food/sharedWidgets/single_product_card.dart';
+import 'package:vege_food/sharedWidgets/view_quick_orders.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -731,77 +732,82 @@ class _HomeScreenState extends State<HomeScreen> {
       transform: matrix,
       child: Stack(
         children: [
-          productList.isNotEmpty?Container(
-            height: 250,
-            margin: EdgeInsets.only(left: 10, right: 10.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              color: index.isEven?Palette.orange1.withOpacity(0.5):Palette.primaryColor.withOpacity(0.5),
-              /*image: productList.length == 1?DecorationImage(
-                fit: BoxFit.contain,
-                image: ExtendedNetworkImageProvider(
-                  "${ApiConstants.baseUrl}/images/products/${Provider.of<AppData>(context).productList![index].product_photo!}",
-                ),
-              ):null,*/
+          productList.isNotEmpty?InkWell(
+            onTap: (){
+              Navigator.push(context, PageTransition(child: ViewQuickOrders(productList: productList,), type: PageTransitionType.rightToLeft));
+            },
+            child: Container(
+              height: 250,
+              margin: EdgeInsets.only(left: 10, right: 10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: index.isEven?Palette.orange1.withOpacity(0.5):Palette.primaryColor.withOpacity(0.5),
+                /*image: productList.length == 1?DecorationImage(
+                  fit: BoxFit.contain,
+                  image: ExtendedNetworkImageProvider(
+                    "${ApiConstants.baseUrl}/images/products/${Provider.of<AppData>(context).productList![index].product_photo!}",
+                  ),
+                ):null,*/
+              ),
+              child: productList.length == 1?Stack(
+                children: [
+                  Positioned.fill(
+                    child: ExtendedImage.network(
+                      "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
+              ):productList.length == 2?Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    bottom: 40,
+                    child: ExtendedImage.network(
+                      "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
+                      width: (MediaQuery.of(context).size.width * 0.90)*0.5,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    bottom: 40,
+                    child: ExtendedImage.network(
+                      "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
+                      width: (MediaQuery.of(context).size.width * 0.90)*0.5,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
+              ):productList.length >= 3?Stack(
+                children: [
+                  Positioned.fill(
+                    child: ExtendedImage.network(
+                      "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    bottom: 20,
+                    child: ExtendedImage.network(
+                      "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
+                      width: (MediaQuery.of(context).size.width * 0.90)*0.5,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    bottom: 20,
+                    child: ExtendedImage.network(
+                      "${ApiConstants.baseUrl}/images/products/${productList[2].product_photo!}",
+                      width: (MediaQuery.of(context).size.width * 0.90)*0.5,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
+              ):SizedBox.shrink(),
             ),
-            child: productList.length == 1?Stack(
-              children: [
-                Positioned.fill(
-                  child: ExtendedImage.network(
-                    "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ],
-            ):productList.length == 2?Stack(
-              children: [
-                Positioned(
-                  left: 0,
-                  bottom: 40,
-                  child: ExtendedImage.network(
-                    "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
-                    width: (MediaQuery.of(context).size.width * 0.90)*0.5,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 40,
-                  child: ExtendedImage.network(
-                    "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
-                    width: (MediaQuery.of(context).size.width * 0.90)*0.5,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ],
-            ):productList.length >= 3?Stack(
-              children: [
-                Positioned.fill(
-                  child: ExtendedImage.network(
-                    "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                Positioned(
-                  left: 0,
-                  bottom: 20,
-                  child: ExtendedImage.network(
-                    "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
-                    width: (MediaQuery.of(context).size.width * 0.90)*0.5,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 20,
-                  child: ExtendedImage.network(
-                    "${ApiConstants.baseUrl}/images/products/${productList[2].product_photo!}",
-                    width: (MediaQuery.of(context).size.width * 0.90)*0.5,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ],
-            ):SizedBox.shrink(),
           ):SizedBox.shrink(),
           Provider.of<AppData>(context).productList != null?Align(
             alignment: Alignment.bottomCenter,
@@ -832,18 +838,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${productList.length == 1?productList[0].product_name!
-                          :productList.length == 2?productList[0].product_name!+", "+ productList[1].product_name!
-                          :productList.length >= 3?productList[0].product_name!+", "+productList[1].product_name!+", "+productList[2].product_name!
-                          :""}",
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: productList.length > 1?2:1,
-                      style: TextStyle(
-                        fontFamily: 'Roboto',
-                        color: Colors.blueGrey,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, PageTransition(child: ViewQuickOrders(productList: productList,), type: PageTransitionType.rightToLeft));
+                      },
+                      child: Text(
+                        "${productList.length == 1?productList[0].product_name!
+                            :productList.length == 2?productList[0].product_name!+", "+ productList[1].product_name!
+                            :productList.length >= 3?productList[0].product_name!+", "+productList[1].product_name!+", "+productList[2].product_name!
+                            :""}",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: productList.length > 1?2:1,
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          color: Colors.blueGrey,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                     SizedBox(height: 10.0,),
