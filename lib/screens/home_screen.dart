@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     bool isOffline = Provider.of<AppData>(context).isoffline;
-    var newMap = groupBy(Provider.of<AppData>(context).productTopList!, (Product product) => product.category_id!);
+    var newMap = groupBy(Provider.of<AppData>(context).productList!, (Product product) => product.category_id);
     print(newMap);
     if(!isOffline){
       getData();
