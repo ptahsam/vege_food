@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
-                backgroundColor: Colors.white,
+                backgroundColor: Palette.primaryColor,
                 shadowColor: Colors.transparent,
                 pinned: false,
                 floating: true,
@@ -757,15 +757,19 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Positioned(
                   left: 0,
+                  bottom: 40,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
+                    width: (MediaQuery.of(context).size.width * 0.90)*0.5,
                     fit: BoxFit.contain,
                   ),
                 ),
                 Positioned(
                   right: 0,
+                  bottom: 40,
                   child: ExtendedImage.network(
                     "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
+                    width: (MediaQuery.of(context).size.width * 0.90)*0.5,
                     fit: BoxFit.contain,
                   ),
                 ),

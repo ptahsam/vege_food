@@ -125,7 +125,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
           bottomNavigationBar: Container(
             padding: EdgeInsets.only(bottom: 0.0),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Palette.primaryColor,
               border: Border(
                 top: BorderSide(
                   color: Palette.greyBorder,
