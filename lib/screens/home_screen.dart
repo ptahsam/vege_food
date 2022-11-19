@@ -829,11 +829,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       "${productList.length == 1?productList[0].product_name!
-                          :productList.length == 2?productList[0].product_photo!+", "+ productList[1].product_photo!
-                          :productList.length >= 3?productList[0].product_photo!+", "+productList[1].product_photo!+", "+productList[2].product_photo!
+                          :productList.length == 2?productList[0].product_name!+", "+ productList[1].product_name!
+                          :productList.length >= 3?productList[0].product_name!+", "+productList[1].product_name!+", "+productList[2].product_name!
                           :""}",
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+                      maxLines: productList.length > 1?2:1,
                       style: TextStyle(
                         fontFamily: 'Roboto',
                         color: Colors.blueGrey,
