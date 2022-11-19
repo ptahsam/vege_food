@@ -54,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
     getInternetConnection(context);
+    getData();
     //displayInternetCard();
   }
 
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Product> pList = Provider.of<AppData>(context).productList!=null?Provider.of<AppData>(context).productList!:[];
     var newMap = groupBy(pList, (Product product) => product.category_id);
     if(!isOffline){
-      getData();
+      //getData();
     }
     return Scaffold(
       backgroundColor: Colors.white,
