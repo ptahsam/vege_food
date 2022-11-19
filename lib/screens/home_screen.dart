@@ -730,19 +730,42 @@ class _HomeScreenState extends State<HomeScreen> {
       transform: matrix,
       child: Stack(
         children: [
-          Provider.of<AppData>(context).productList != null?Container(
+          productList.isNotEmpty?Container(
             height: 250,
             margin: EdgeInsets.only(left: 10, right: 10.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.0),
               color: index.isEven?Palette.orange1.withOpacity(0.5):Palette.primaryColor.withOpacity(0.5),
-              image: DecorationImage(
+              image: productList.length == 1?DecorationImage(
                 fit: BoxFit.contain,
                 image: ExtendedNetworkImageProvider(
                   "${ApiConstants.baseUrl}/images/products/${Provider.of<AppData>(context).productList![index].product_photo!}",
                 ),
-              ),
+              ):null,
             ),
+            child: productList.length > 1?Stack(
+              children: [
+                Positioned.fill(
+                  child: ExtendedImage.network(
+                    "${ApiConstants.baseUrl}/images/products/${productList[0].product_photo!}",
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  child: ExtendedImage.network(
+                    "${ApiConstants.baseUrl}/images/products/${productList[1].product_photo!}",
+                    width: double.infinity * 0.5,
+                  ),
+                ),
+                productList.length > 2?Positioned(
+                  right: 0,
+                  child: ExtendedImage.network(
+                    "${ApiConstants.baseUrl}/images/products/${productList[2].product_photo!}",
+                    width: double.infinity * 0.5,
+                  ),
+                ):SizedBox.shrink(),
+              ],
+            ):SizedBox.shrink(),
           ):SizedBox.shrink(),
           Provider.of<AppData>(context).productList != null?Align(
             alignment: Alignment.bottomCenter,
