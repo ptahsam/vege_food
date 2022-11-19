@@ -16,7 +16,7 @@ class AppData extends ChangeNotifier
   List<Order>? userOrder;
   List<OrderItem>? orderItem;
   User? user;
-  bool isoffline = false;
+  bool isoffline = true;
 
   void updateProductList(List<Product> listProduct)
   {

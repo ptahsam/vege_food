@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/product.dart';
@@ -35,11 +36,13 @@ class SingleProductCard extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Row(
           children: [
-            Image.network(
+            ExtendedImage.network(
               "${ApiConstants.baseUrl}/images/products/${product.product_photo!}",
               height: 150.0,
               width: 150.0,
               fit: BoxFit.scaleDown,
+              cache: true,
+              mode: ExtendedImageMode.gesture,
             ),
             Expanded(
               child: Column(

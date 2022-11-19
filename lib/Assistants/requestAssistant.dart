@@ -23,7 +23,6 @@ class RequestAssistant
 
   static Future<dynamic> getRequest(Map params) async
   {
-
     var response = await http.post(Uri.parse("${ApiConstants.baseUrl}/includes/process.php"),
         body: params);
     try

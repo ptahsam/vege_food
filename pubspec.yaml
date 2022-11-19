@@ -57,6 +57,7 @@ dependencies:
   http_auth: ^1.0.1
   webview_flutter: ^3.0.4
   connectivity_plus: ^3.0.2
+  collection: ^1.16.0
 
 dev_dependencies:
   flutter_test:

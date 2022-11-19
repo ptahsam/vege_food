@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:fade_shimmer/fade_shimmer.dart';
@@ -33,8 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> categories = [];
   PageController pageController = PageController(viewportFraction: 0.85);
   var _currPageValue = 0.0;
-  double _scaleFactor = 0.8;
-  double _cardHeight = 300.0;
+  final double _scaleFactor = 0.8;
+  final double _cardHeight = 300.0;
 
   @override
   void didUpdateWidget(covariant HomeScreen oldWidget) {
@@ -47,27 +48,21 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    AssistantMethods.getAllProducts(context);
-    AssistantMethods.getAllCategories(context);
-    AssistantMethods.getTopProducts(context);
     pageController.addListener(() {
       setState(() {
         _currPageValue = pageController.page!;
       });
     });
     getInternetConnection(context);
-    displayInternetCard();
+    //displayInternetCard();
   }
 
-  displayInternetCard(){
-    Future.delayed(Duration.zero,()
-    {
-      if(Provider.of<AppData>(context, listen: false).isoffline) {
-        displayToastMessage("No internet connection", context);
-      }else{
-        displayToastMessage("Internet connection restored", context);
-      }
-    });
+  getData() async{
+    AssistantMethods.getAllProducts(context);
+    AssistantMethods.getAllCategories(context);
+    AssistantMethods.getTopProducts(context);
+    AssistantMethods.getUserCartItems(context, await getUserId());
+    AssistantMethods.getUserOrderItems(context, await getUserId());
   }
 
   @override
@@ -80,6 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isOffline = Provider.of<AppData>(context).isoffline;
+    var newMap = groupBy(Provider.of<AppData>(context).productTopList!, (Product obj) => obj['category_id']);
+    print(newMap);
+    if(!isOffline){
+      getData();
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -87,11 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onRefresh: (){
             return Future.delayed(
               Duration(seconds: 1), () async {
-              AssistantMethods.getAllProducts(context);
-              AssistantMethods.getAllCategories(context);
-              AssistantMethods.getTopProducts(context);
-              AssistantMethods.getUserCartItems(context, await getUserId());
-              AssistantMethods.getUserOrderItems(context, await getUserId());
+              getData();
             },
             );
           },

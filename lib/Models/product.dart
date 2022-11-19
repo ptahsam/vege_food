@@ -3,6 +3,7 @@ import 'package:vege_food/Models/category.dart';
 
 class Product {
   int? id;
+  int? category_id;
   String? product_name;
   String? product_price;
   String? product_quantity;
@@ -22,6 +23,7 @@ class Product {
 
     return Product(
       id: json['id'],
+      category_id: json["category_id"],
       product_name: json['product_name'],
       product_price: json['product_price'],
       product_quantity: json['product_quantity'],

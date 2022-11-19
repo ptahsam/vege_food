@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
+import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/screens/screens.dart';
@@ -42,18 +44,13 @@ class _NavBarScreenState extends State<NavBarScreen> {
   void didUpdateWidget(covariant NavBarScreen oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
-    getCartItems();
-    getOrderItems();
-    getUserData();
+    getData();
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUserData();
-    getOrderItems();
-    getCartItems();
     checkIsNavigate();
   }
 
@@ -63,6 +60,12 @@ class _NavBarScreenState extends State<NavBarScreen> {
         _selectedIndex = widget.navigateIndex;
       });
     }
+  }
+
+  getData(){
+    getUserData();
+    getOrderItems();
+    getCartItems();
   }
 
   getUserData() async{
@@ -82,13 +85,43 @@ class _NavBarScreenState extends State<NavBarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isOffline = Provider.of<AppData>(context).isoffline;
+    if(!isOffline){
+      getData();
+    }
     return DefaultTabController(
         length: _icons.length,
         child: Scaffold(
-            body: IndexedStack(
-              index: _selectedIndex,
-              children: _screens,
+          bottomSheet: isOffline?Container(
+            height: 70.0,
+            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.5),
             ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "No internet connection",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: (){
+
+                  },
+                  child: Text(
+                    "Offline Mode",
+                  ),
+                ),
+              ],
+            ),
+          ):SizedBox.shrink(),
+          body: IndexedStack(
+            index: _selectedIndex,
+            children: _screens,
+          ),
           bottomNavigationBar: Container(
             padding: EdgeInsets.only(bottom: 0.0),
             decoration: BoxDecoration(
