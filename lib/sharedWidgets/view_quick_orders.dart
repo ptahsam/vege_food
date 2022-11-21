@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:vege_food/Models/apiConstants.dart';
@@ -18,6 +19,7 @@ class ViewQuickOrders extends StatefulWidget {
 class _ViewQuickOrdersState extends State<ViewQuickOrders> {
 
   int itemsNo = 0;
+  int _currPageValue = 0;
 
   @override
   void initState() {
@@ -72,6 +74,11 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
           children: [
             PageView.builder(
               itemCount: itemsNo,
+              onPageChanged: (int i){
+                setState(() {
+                  _currPageValue = i;
+                });
+              },
               itemBuilder: (ctx, int position){
                 Product product = widget.productList[position];
                 return Container(
@@ -129,6 +136,21 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
                   ),
                 );
               },
+            ),
+            Positioned(
+              left: 0.0,
+              right: 0.0,
+              bottom: 20.0,
+              child: DotsIndicator(
+                dotsCount: itemsNo,
+                position: _currPageValue.toDouble(),
+                decorator: DotsDecorator(
+                  size: Size.square(9.0),
+                  activeSize: Size(18.0, 9.0),
+                  activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                  activeColor: Palette.primaryColor.withOpacity(0.5),
+                ),
+              ),
             ),
           ],
         ),
