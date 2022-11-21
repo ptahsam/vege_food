@@ -74,48 +74,42 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
               itemCount: itemsNo,
               itemBuilder: (ctx, int position){
                 Product product = widget.productList[position];
-                return Stack(
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Positioned.fill(
+                    SizedBox(height: 20.0,),
+                    Text(
+                      product.product_name!,
+                      style: TextStyle(
+                          fontSize: 17.0,
+                          color: Colors.blueGrey
+                      ),
+                    ),
+                    SizedBox(height: 20.0,),
+                    Center(
                       child: ExtendedImage.network(
                         "${ApiConstants.baseUrl}/images/products/${product.product_photo!}",
                       ),
                     ),
-                    Positioned(
-                      top: 20,
-                      left: 12.0,
-                      right: 12.0,
-                      child: Text(
-                        product.product_name!,
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: Colors.blueGrey
+                    SizedBox(height: 20.0,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "KES. ${product.product_price}",
+                          style: TextStyle(
+                            fontSize: 17.0,
+                            color: Palette.orange1,
+                          ),
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: ((MediaQuery.of(context).size.height)*0.5)-100.0,
-                      left: 12.0,
-                      right: 12.0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "KES. ${product.product_price}",
-                            style: TextStyle(
-                              fontSize: 17.0,
-                              color: Palette.orange1,
-                            ),
+                        Text(
+                          "Available ${product.product_quantity}",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Palette.textColor2,
                           ),
-                          Text(
-                            "Available ${product.product_quantity}",
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Palette.textColor2,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 );
