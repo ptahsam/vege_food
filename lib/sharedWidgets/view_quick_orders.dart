@@ -82,6 +82,7 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
                       SizedBox(height: 20.0,),
                       Text(
                         product.product_name!,
+                        textAlign: TextAlign.start,
                         style: TextStyle(
                             fontSize: 17.0,
                             color: Colors.blueGrey
@@ -104,11 +105,22 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
                               color: Palette.orange1,
                             ),
                           ),
-                          Text(
-                            "Available ${product.product_quantity}",
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Palette.textColor2,
+                          RichText(
+                            text: TextSpan(
+                              text: "Available:",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Palette.textColor1,
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: " ${product.product_quantity}",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Palette.primaryColor,
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ],
