@@ -74,44 +74,47 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
               itemCount: itemsNo,
               itemBuilder: (ctx, int position){
                 Product product = widget.productList[position];
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20.0,),
-                    Text(
-                      product.product_name!,
-                      style: TextStyle(
-                          fontSize: 17.0,
-                          color: Colors.blueGrey
-                      ),
-                    ),
-                    SizedBox(height: 20.0,),
-                    Center(
-                      child: ExtendedImage.network(
-                        "${ApiConstants.baseUrl}/images/products/${product.product_photo!}",
-                      ),
-                    ),
-                    SizedBox(height: 20.0,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "KES. ${product.product_price}",
-                          style: TextStyle(
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20.0,),
+                      Text(
+                        product.product_name!,
+                        style: TextStyle(
                             fontSize: 17.0,
-                            color: Palette.orange1,
-                          ),
+                            color: Colors.blueGrey
                         ),
-                        Text(
-                          "Available ${product.product_quantity}",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Palette.textColor2,
-                          ),
+                      ),
+                      SizedBox(height: 20.0,),
+                      Center(
+                        child: ExtendedImage.network(
+                          "${ApiConstants.baseUrl}/images/products/${product.product_photo!}",
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      SizedBox(height: 20.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "KES. ${product.product_price}",
+                            style: TextStyle(
+                              fontSize: 17.0,
+                              color: Palette.orange1,
+                            ),
+                          ),
+                          Text(
+                            "Available ${product.product_quantity}",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Palette.textColor2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
