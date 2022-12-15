@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -11,6 +12,7 @@ import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/user.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
+import 'package:vege_food/sharedWidgets/take_photo.dart';
 import 'package:vege_food/sharedWidgets/view_user_photo.dart';
 
 class PersonalInfo extends StatefulWidget {
@@ -521,16 +523,45 @@ class _PersonalInfoState extends State<PersonalInfo> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height: 60.0,
-                width: 60.0,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200]!,
-                  shape: BoxShape.circle
-                ),
-                child: Icon(
-                  MdiIcons.camera,
-                  color: Palette.primaryColor,
+              InkWell(
+                onTap: () async {
+                  final cameras = await availableCameras();
+
+                  final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TakePhoto(cameras: cameras)));
+
+                  if(result != null){
+                    XFile xFile = result;
+                    File file = File(xFile.path);
+
+                    setState(() {
+                      userSelectedFile = file;
+                    });
+
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                      ),
+                      context: context,
+                      builder: (context) => buildUploadSheet(),
+                    );
+                  }
+                },
+                child: Container(
+                  height: 60.0,
+                  width: 60.0,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200]!,
+                    shape: BoxShape.circle
+                  ),
+                  child: Icon(
+                    MdiIcons.camera,
+                    color: Palette.primaryColor,
+                  ),
                 ),
               ),
               SizedBox(width: 40.0,),

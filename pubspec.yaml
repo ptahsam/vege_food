@@ -59,6 +59,7 @@ dependencies:
   connectivity_plus: ^3.0.2
   collection: ^1.16.0
   mpesa_flutter_plugin: ^1.6.1
+  camera: ^0.9.4+14
 
 dev_dependencies:
   flutter_test:
