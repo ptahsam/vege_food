@@ -60,6 +60,7 @@ dependencies:
   collection: ^1.16.0
   mpesa_flutter_plugin: ^1.6.1
   camera: ^0.9.4+14
+  advance_pdf_viewer: ^2.0.1
 
 dev_dependencies:
   flutter_test:

@@ -371,6 +371,7 @@ class _ViewOrderState extends State<ViewOrder> {
             onTap: () async {
               String res = await AssistantMethods.generateOrder(context, widget.order.order_refno!, await getUserId());
               Navigator.pop(context);
+              Navigator.push(context, PageTransition(child: ViewaGeneratedOrder(ordername: res,), type: PageTransitionType.rightToLeft));
               /*showModalBottomSheet(
                 isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
@@ -379,7 +380,7 @@ class _ViewOrderState extends State<ViewOrder> {
                 context: context,
                 builder: (context) => buildOrderDownload(res),
               );*/
-              displayToastMessage(res, context);
+              //displayToastMessage(res, context);
             },
             child: Row(
               children: [
