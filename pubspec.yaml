@@ -60,7 +60,10 @@ dependencies:
   collection: ^1.16.0
   mpesa_flutter_plugin: ^1.6.1
   camera: ^0.9.4+14
-  advance_pdf_viewer: ^2.0.1
+  advance_pdf_viewer:
+    git:
+      url: https://github.com/lohanidamodar/pdf_viewer.git
+      ref: 4e5d96be29de515f1081c0b6897741b8dca84722
 
 dev_dependencies:
   flutter_test:

@@ -4,10 +4,12 @@ packages:
   advance_pdf_viewer:
     dependency: "direct main"
     description:
-      name: advance_pdf_viewer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
+      path: "."
+      ref: "4e5d96be29de515f1081c0b6897741b8dca84722"
+      resolved-ref: "4e5d96be29de515f1081c0b6897741b8dca84722"
+      url: "https://github.com/lohanidamodar/pdf_viewer.git"
+    source: git
+    version: "2.0.2"
   archive:
     dependency: transitive
     description:
