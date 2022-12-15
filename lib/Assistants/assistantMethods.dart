@@ -79,6 +79,22 @@ class AssistantMethods {
     return data;
   }
 
+  static Future<String> saveTransactionData(context, String refno, String transid, String status) async{
+    String data = "";
+    var params = {
+      'saveTransactionData': '1',
+      'refno': '${refno}',
+      'transid': '${transid}',
+      'status': '${status}',
+    };
+
+    var response = await RequestAssistant.getRequest(params);
+
+    data = response.toString();
+
+    return data;
+  }
+
   static Future<String> addNewOrder(context, String userid) async{
     String data = "";
     var params = {

@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/Models/cart.dart';
 import 'package:vege_food/Models/orderItem.dart';
+import 'package:vege_food/Models/orders.dart';
 import 'package:vege_food/Models/product.dart';
 
 StreamSubscription? internetconnection;
@@ -60,6 +61,28 @@ Future<String> getUserId() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String userID = prefs.getString('userid') != null?prefs.getString('userid')!:"";
   return userID;
+}
+
+List<Order> manageOrders(List<Order> list, String type) {
+  List<Order> orderList = [];
+  if(type == "paid"){
+    for(var i = 0; i < list.length; i++){
+      Order order = list[i];
+      if(order.payment_id != null && order.payment_id != ""){
+        orderList.add(order);
+      }
+    }
+  }
+
+  if(type == "unpaid"){
+    for(var i = 0; i < list.length; i++){
+      Order order = list[i];
+      if(order.payment_id == null || order.payment_id == ""){
+        orderList.add(order);
+      }
+    }
+  }
+  return orderList;
 }
 
 String getTotalCartItems(List<Cart> list) {

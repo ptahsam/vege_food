@@ -281,13 +281,15 @@ class _ViewOrderState extends State<ViewOrder> {
                 },
               ),
             ),
-            InkWell(
-              onTap: (){
-                Navigator.push(context, PageTransition(
-                  child: PaypalPayment(onFinish: (number) async {
-                  print('order id: '+number);
-                },), type: PageTransitionType.rightToLeft));
-              },
+            widget.order.payment_id != null && widget.order.payment_id != ""?SizedBox.shrink():InkWell(
+              onTap: () async{
+                var res = await Navigator.push(context, PageTransition(
+                  child: MpesaPayment(userphone: "254706209779", orderid: widget.order.order_refno!.toUpperCase(), amount: double.parse(getTotalOrderAmount(widget.item),),), type: PageTransitionType.rightToLeft));
+                  if(res != null){
+                    AssistantMethods.getUserOrderItems(context, await getUserId());
+                    Navigator.pop(context);
+                  }
+                },
               child: Container(
                 width: (MediaQuery.of(context).size.width) - 24,
                 padding: EdgeInsets.symmetric(vertical: 10.0),

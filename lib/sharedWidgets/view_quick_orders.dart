@@ -1,8 +1,13 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vege_food/Assistants/assistantMethods.dart';
+import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/product.dart';
+import 'package:vege_food/Models/user.dart';
+import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 
 class ViewQuickOrders extends StatefulWidget {
@@ -20,6 +25,9 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
 
   int itemsNo = 0;
   int _currPageValue = 0;
+  int j = 0;
+  String status = "";
+  bool isSaving = false;
 
   @override
   void initState() {
@@ -50,21 +58,57 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
             width: 30.0,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.white,
             ),
             child: Icon(
               Icons.close,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
         actions: [
-          ElevatedButton(
-            onPressed: (){
-
-            },
-            child: Text(
-              "Add item${widget.productList.length > 1?"s":""} to cart",
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0, top: 10.0, bottom: 10.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                setState(() {
+                  isSaving = true;
+                });
+                User user = Provider.of<AppData>(context, listen: false).user!;
+                for(var i = 0; i < itemsNo; i++){
+                  String res = await AssistantMethods.addItemToCart(context, user.id!.toString(), widget.productList[i].id!.toString(), "1");
+                  if(res == "SUCCESSFULLY_ADDED"){
+                    setState((){
+                      j = i;
+                      status = "SUCCESSFULLY_ADDED";
+                    });
+                  }else{
+                    displayToastMessage("An error occurred. Please try again later.", context);
+                  }
+                }
+                if(j == (itemsNo - 1) && status == "SUCCESSFULLY_ADDED"){
+                  Navigator.pop(context);
+                  AssistantMethods.getUserCartItems(context, user.id!.toString());
+                }
+              },
+              child: isSaving?Row(
+                children: [
+                  SizedBox(
+                    width: 15.0,
+                    height: 15.0,
+                    child: CircularProgressIndicator(color: Colors.white,),
+                  ),
+                  SizedBox(width: 10.0),
+                  Text(
+                    "Adding to ...",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ):Text(
+                "Add item${widget.productList.length > 1?"s":""} to cart",
+              ),
             ),
           ),
         ],
@@ -84,6 +128,7 @@ class _ViewQuickOrdersState extends State<ViewQuickOrders> {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 12.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(height: 20.0,),

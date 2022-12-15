@@ -47,17 +47,17 @@ class SingleProductCard extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
                       product.product_name!,
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                         color: Colors.blueGrey,
                       ),
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -66,7 +66,7 @@ class SingleProductCard extends StatelessWidget {
                     child: Text(
                       product.product_description!,
                       style: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.w400,
                         color: Palette.textColor1,
                       ),
@@ -74,21 +74,30 @@ class SingleProductCard extends StatelessWidget {
                       maxLines: 2,
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 10.0,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Text(
-                          product.product_quantity!,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w500,
-                            color: Palette.primaryColor,
-                          ),
+                          "Available",
                         ),
                       ),
+                      Text(
+                        product.product_quantity!,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w400,
+                          color: Palette.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.0,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6.0),
                         decoration: BoxDecoration(

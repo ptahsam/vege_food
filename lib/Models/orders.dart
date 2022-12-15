@@ -3,7 +3,7 @@ import 'package:vege_food/Models/orderItem.dart';
 class Order {
   int? id;
   String? order_refno;
-  int? payment_id;
+  String? payment_id;
   List<OrderItem>? listOrderItems;
   String? date_added;
 

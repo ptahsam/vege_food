@@ -230,9 +230,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                         onTap: Provider.of<AppData>(context).user == null?() async {
                           String res = await Navigator.push(context, PageTransition(child: LoginScreen(), type: PageTransitionType.rightToLeft));
                           if(res == "LOGGED_IN"){
+                            setState(() {
+                              isAddingItemsToCart = true;
+                            });
                             addItemsToCart();
                           }
                         }:() async {
+                          setState(() {
+                            isAddingItemsToCart = true;
+                          });
                           addItemsToCart();
                         },
                         child: Container(
@@ -249,7 +255,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                             ],
                           ),
-                          child: Row(
+                          child: isAddingItemsToCart?Row(
+                            children: [
+                              Container(
+                                height: 20.0,
+                                width: 20.0,
+                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.0,),
+                              ),
+                              SizedBox(width: 15.0,),
+                              Text(
+                                "Add to cart ...",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ):Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
@@ -261,8 +284,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               Text(
                                 "Add for KES. ${_totalPrice}",
                                 style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18.0,
                                   color: Colors.white,
                                 ),
                               ),
@@ -285,9 +308,14 @@ class _ProductDetailsState extends State<ProductDetails> {
     User user = Provider.of<AppData>(context, listen: false).user!;
     String res = await AssistantMethods.addItemToCart(context, user.id!.toString(), widget.product.id!.toString(), _itemsCount.toString());
     if(res == "SUCCESSFULLY_ADDED"){
+      setState(() {
+        isAddingItemsToCart = false;
+      });
       Navigator.pop(context);
-      AssistantMethods.getUserCartItems(context, user.id!.toString());
     }else{
+      setState(() {
+        isAddingItemsToCart = false;
+      });
       displayToastMessage("An error occurred. Please try again later.", context);
     }
   }

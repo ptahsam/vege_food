@@ -18,6 +18,9 @@ class CartDetails extends StatefulWidget {
 }
 
 class _CartDetailsState extends State<CartDetails> {
+
+  bool isPlacingOrder = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -232,12 +235,21 @@ class _CartDetailsState extends State<CartDetails> {
                       onTap: () async {
                         String userid = await getUserId();
                         if(userid != null || userid != ""){
+                          setState(() {
+                            isPlacingOrder = true;
+                          });
                           String res = await AssistantMethods.addNewOrder(context, await getUserId());
                           if(res == "SUCCESSFULLY_ADDED"){
                             AssistantMethods.getUserCartItems(context, await getUserId());
                             AssistantMethods.getUserOrderItems(context, await getUserId());
+                            setState(() {
+                              isPlacingOrder = false;
+                            });
                             Navigator.pop(context);
                           }else{
+                            setState(() {
+                              isPlacingOrder = false;
+                            });
                             displayToastMessage("An error occurred. Please try again later", context);
                           }
                         }
@@ -258,11 +270,29 @@ class _CartDetailsState extends State<CartDetails> {
                           ],
                         ),
                         child: Center(
-                          child: Text(
+                          child: isPlacingOrder?Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Placing Order ...",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(width: 10.0,),
+                              Container(
+                                height: 20.0,
+                                width: 20.0,
+                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.0,),
+                              ),
+                            ],
+                          ):Text(
                             "Place Order",
                             style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20.0,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18.0,
                               color: Colors.white,
                             ),
                           ),

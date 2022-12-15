@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
 import 'package:provider/provider.dart';
 import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/config/colorMap.dart';
 import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/screens/navbar_screen.dart';
 void main() {
+  MpesaFlutterPlugin.setConsumerKey("Nh8dkP49vYJF07ODmJhCw5fajPHU16Ol");
+  MpesaFlutterPlugin.setConsumerSecret("JjXYa0ptrT3IWabG");
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Palette.primaryColor, // navigation bar color
