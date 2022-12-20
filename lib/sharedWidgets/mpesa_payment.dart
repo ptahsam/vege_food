@@ -29,7 +29,7 @@ class _MpesaPaymentState extends State<MpesaPayment> {
       transactionInitialisation =
       await MpesaFlutterPlugin.initializeMpesaSTKPush(
           businessShortCode: "174379",
-          transactionType: TransactionType.CustomerPayBillOnline,
+          transactionType: TransactionType.CustomerBuyGoodsOnline,
           amount: amount,
           partyA: userPhone,
           partyB: "174379",
