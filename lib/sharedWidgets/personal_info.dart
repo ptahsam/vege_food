@@ -32,6 +32,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   bool isEditingPhone = false;
   bool isEditingEmail = false;
   bool isEdit = false;
+  bool isUploading = false;
 
   File? userSelectedFile;
 
@@ -188,7 +189,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
                                 ),
                                 context: context,
-                                builder: (context) => buildSelectSheet(),
+                                builder: (context){
+                                  isUploading = false;
+                                  return StatefulBuilder(
+                                    builder: (BuildContext context, StateSetter mystate){
+                                      return buildSelectSheet(mystate);
+                                    },
+                                  );
+                                },
                               );
                             },
                             child: Container(
@@ -416,7 +424,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     );
   }
 
-  Widget buildUploadSheet() {
+  Widget buildUploadSheet(StateSetter mystate) {
     return Container(
       padding: const EdgeInsets.only(left: 12.0, top: 30.0, right: 12.0, bottom: 50.0),
       child: Column(
@@ -424,7 +432,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Upload profile photo",
+            "${isUploading?"Uploading photo":"Upload profile photo"}",
             style: TextStyle(
               fontSize: 20.0,
               color: Colors.black,
@@ -432,17 +440,32 @@ class _PersonalInfoState extends State<PersonalInfo> {
             ),
           ),
           SizedBox(height: 20.0,),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Image.file(
-                userSelectedFile!,
-                height: MediaQuery.of(context).size.height * 0.6,
+          Stack(
+            children: [
+              Container(
                 width: MediaQuery.of(context).size.width * 0.8,
-                fit: BoxFit.cover,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.file(
+                    userSelectedFile!,
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: isUploading?Center(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 40.0),
+                        child: CircularProgressIndicator(),
+                    ),
+                  ):SizedBox.shrink(),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 10.0,),
           Container(
@@ -452,12 +475,21 @@ class _PersonalInfoState extends State<PersonalInfo> {
               children: [
                 InkWell(
                   onTap: () async {
+                    mystate(() {
+                      isUploading = true;
+                    });
                     String res = await AssistantMethods.uploadUserProfile(userSelectedFile!);
-                    print(res.toString().replaceAll('"', ''));
+                    //print(res.toString().replaceAll('"', ''));
                     if(res.toString().replaceAll('"', '') == "SUCCESSFULLY_UPDATED"){
                       AssistantMethods.getUserData(context, await getUserId());
+                      mystate(() {
+                        isUploading = false;
+                      });
                       Navigator.pop(context);
                     }else{
+                      mystate(() {
+                        isUploading = false;
+                      });
                       displayToastMessage("An error occured. Please try again later.", context);
                     }
                   },
@@ -504,7 +536,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     );
   }
 
-  Widget buildSelectSheet() {
+  Widget buildSelectSheet(StateSetter mystate) {
     return Container(
       padding: const EdgeInsets.only(left: 12.0, top: 30.0, right: 12.0, bottom: 50.0),
       child: Column(
@@ -547,7 +579,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
                       ),
                       context: context,
-                      builder: (context) => buildUploadSheet(),
+                      builder: (context){
+                        isUploading = false;
+                        return StatefulBuilder(
+                          builder: (BuildContext context, StateSetter mystate){
+                            return buildUploadSheet(mystate);
+                          },
+                        );
+                      },
                     );
                   }
                 },
@@ -585,7 +624,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
                       ),
                       context: context,
-                      builder: (context) => buildUploadSheet(),
+                      builder: (context){
+                        isUploading = false;
+                        return StatefulBuilder(
+                          builder: (BuildContext context, StateSetter mystate){
+                            return buildUploadSheet(mystate);
+                          },
+                        );
+                      },
                     );
                   }
                 },
