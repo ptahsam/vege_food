@@ -538,7 +538,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Container(
                                             padding: EdgeInsets.symmetric(horizontal: 5.0),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 InkWell(
                                                   onTap: (){
@@ -555,14 +555,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                   ),
                                                 ),
-                                                ElevatedButton(
+                                                /*ElevatedButton(
                                                   onPressed: (){
 
                                                   },
                                                   child: Text(
                                                     "Add to cart",
                                                   ),
-                                                ),
+                                                ),*/
                                               ],
                                             ),
                                           ),
@@ -1207,7 +1207,7 @@ class _OrderCardState extends State<OrderCard> {
                             ),
                           ],
                         ):Text(
-                          "Add item${widget.productList.length > 1?"s":""} to cart",
+                          "Add to cart",
                           style: TextStyle(
                             color: Colors.white,
                           ),

@@ -411,7 +411,7 @@ class _OrderDataState extends State<OrderData> {
               child: Row(
                 mainAxisAlignment: widget.order.payment_id != null && widget.order.payment_id !=""?MainAxisAlignment.end:MainAxisAlignment.spaceBetween,
                 children: [
-                  widget.order.payment_id != null && widget.order.payment_id !=""?SizedBox.shrink():Container(
+                  /*widget.order.payment_id != null && widget.order.payment_id !=""?SizedBox.shrink():Container(
                     padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25.0),
@@ -425,7 +425,7 @@ class _OrderDataState extends State<OrderData> {
                           fontSize: 16.0
                       ),
                     ),
-                  ),
+                  ),*/
                   InkWell(
                     onTap: (){
                       List<OrderItem> items = widget.order.listOrderItems!;
