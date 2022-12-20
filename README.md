@@ -1,16 +1,12 @@
-# vege_food
+# VegeFood
 
-Grocery ordering mobile application.
+A Grocery ordering mobile application.
 
-## Getting Started
+## OVERVIEW
 
-This project is a starting point for a Flutter application.
+### 1.Project Background and Description
 
-A few resources to get you started if this is your first Flutter project:
+The idea of the online grocery shopping application is to enable customers order fresh groceries with a single click. With the use of the online app for grocery shopping, users shall be able to manage their budget in a better manner. The app will ease the process of calculating every item a user adds to their shopping cart hence saving time and tracking their incurring amount on their overall expenses.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 2.Project Scope
+In this app users will be able to search for grocery items that they need, add items to cart, edit and remove items they don’t need. After adding items to cart they will be able to make an order and also make payments for their orders. In addition, the app will also keep history of customers’ orders for future reference. The mobile app will also enable users create and manage their user accounts.
