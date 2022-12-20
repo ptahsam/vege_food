@@ -44,7 +44,7 @@ class _MpesaPaymentState extends State<MpesaPayment> {
       print("TRANSACTION RESULT: " + transactionInitialisation.toString() + "\n" + result);
       if(result == "SUCCESSFULLY_ADDED"){
         displayToastMessage("Your payment was initialized. Waiting for response.", context);
-        //Navigator.pop(context,"successfully_processed");
+        Navigator.pop(context,"successfully_processed");
       }else{
         Navigator.pop(context);
         //displayToastMessage("An error occurred. Please try again later.", context);
