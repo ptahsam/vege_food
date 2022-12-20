@@ -29,12 +29,12 @@ class _MpesaPaymentState extends State<MpesaPayment> {
       transactionInitialisation =
       await MpesaFlutterPlugin.initializeMpesaSTKPush(
           businessShortCode: "174379",
-          transactionType: TransactionType.CustomerBuyGoodsOnline,
+          transactionType: TransactionType.CustomerPayBillOnline,
           amount: amount,
           partyA: userPhone,
           partyB: "174379",
           callBackURL: Uri(
-              scheme: "https", host: "75c5-102-217-7-30.in.ngrok.io", path: "/vege_food/includes/mpesaresponse.php"),
+              scheme: "https", host: "31fa-102-217-7-30.in.ngrok.io", path: "/vege_food/includes/mpesaresponse.php"),
           accountReference: "VegeFood",
           phoneNumber: userPhone,
           baseUri: Uri(scheme: "https", host: "sandbox.safaricom.co.ke"),
