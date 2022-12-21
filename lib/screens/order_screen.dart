@@ -173,7 +173,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         ):Align(
                           alignment: Alignment.center,
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.20,
+                            height: MediaQuery.of(context).size.height * 0.35,
                             width: MediaQuery.of(context).size.width * 0.75,
                             decoration: BoxDecoration(
                               color: Colors.grey[200]!,
@@ -237,7 +237,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         ):Align(
                           alignment: Alignment.center,
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.20,
+                            height: MediaQuery.of(context).size.height * 0.35,
                             width: MediaQuery.of(context).size.width * 0.75,
                             decoration: BoxDecoration(
                               color: Colors.grey[200]!,

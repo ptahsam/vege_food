@@ -60,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0),
+        padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 10.0),
         child: Column(
           children: [
             Center(
@@ -72,8 +72,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                   child: Image.network(
                     user.user_photo!.contains("https")?user.user_photo!:"${ApiConstants.baseUrl}/images/profiles/${user.user_photo!}",
-                    height: 100.0,
-                    width: 100.0,
+                    height: 70.0,
+                    width: 70.0,
                     fit: BoxFit.cover,
                     loadingBuilder: (BuildContext context, Widget child,
                         ImageChunkEvent? loadingProgress) {
@@ -83,8 +83,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       return Center(
                         child: Container(
                           margin: EdgeInsets.all(8.0),
-                          height: 100,
-                          width: 100,
+                          height: 70,
+                          width: 70,
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
@@ -97,8 +97,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ):Image.asset(
                   "images/profile.jpg",
-                  height: 100.0,
-                  width: 100.0,
+                  height: 70.0,
+                  width: 70.0,
                 ),
               ),
             ),
@@ -217,35 +217,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: Palette.black6,
               ),
             ),
-            InkWell(
-              onTap: () async {
-                saveUserId('');
-                AssistantMethods.getUserData(context, '');
-                AssistantMethods.getUserCartItems(context, await getUserId());
-                AssistantMethods.getUserOrderItems(context, await getUserId());
-                setState(() {
+            Expanded(
+              child: InkWell(
+                onTap: () async {
+                  saveUserId('');
+                  AssistantMethods.getUserData(context, '');
+                  AssistantMethods.getUserCartItems(context, await getUserId());
+                  AssistantMethods.getUserOrderItems(context, await getUserId());
+                  setState(() {
 
-                });
-              },
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: Icon(
-                  FontAwesomeIcons.signOut,
-                  color: Palette.black6,
-                  size: 24.0,
-                ),
-                title: Text(
-                  "Logout",
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w600,
-                      color: Palette.black6
+                  });
+                },
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    FontAwesomeIcons.signOut,
+                    color: Palette.black6,
+                    size: 24.0,
                   ),
-                ),
-                trailing: Icon(
-                  Icons.keyboard_arrow_right_outlined,
-                  size: 28.0,
-                  color: Palette.black6,
+                  title: Text(
+                    "Logout",
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
+                        color: Palette.black6
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                    size: 28.0,
+                    color: Palette.black6,
+                  ),
                 ),
               ),
             ),

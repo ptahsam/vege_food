@@ -34,7 +34,7 @@ class _MpesaPaymentState extends State<MpesaPayment> {
           partyA: userPhone,
           partyB: "174379",
           callBackURL: Uri(
-              scheme: "https", host: "31fa-102-217-7-30.in.ngrok.io", path: "/vege_food/includes/mpesaresponse.php"),
+              scheme: "https", host: "228c-102-217-7-30.in.ngrok.io", path: "/vege_food/includes/mpesaresponse.php"),
           accountReference: "VegeFood",
           phoneNumber: userPhone,
           baseUri: Uri(scheme: "https", host: "sandbox.safaricom.co.ke"),
@@ -44,14 +44,14 @@ class _MpesaPaymentState extends State<MpesaPayment> {
       print("TRANSACTION RESULT: " + transactionInitialisation.toString() + "\n" + result);
       if(result == "SUCCESSFULLY_ADDED"){
         displayToastMessage("Your payment was initialized. Waiting for response.", context);
-        Navigator.pop(context,"successfully_processed");
+        //Navigator.pop(context,"successfully_processed");
       }else{
         Navigator.pop(context);
         //displayToastMessage("An error occurred. Please try again later.", context);
       }
       print("TRANSACTION RESULT: " + transactionInitialisation.toString() + "\n" + result);
 
-      return transactionInitialisation;
+      //return transactionInitialisation;
     } catch (e) {
       print("CAUGHT EXCEPTION: " + e.toString());
     }
