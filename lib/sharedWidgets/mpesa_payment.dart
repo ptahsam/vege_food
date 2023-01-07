@@ -34,7 +34,10 @@ class _MpesaPaymentState extends State<MpesaPayment> {
           partyA: userPhone,
           partyB: "174379",
           callBackURL: Uri(
-              scheme: "https", host: "228c-102-217-7-30.in.ngrok.io", path: "/vege_food/includes/mpesaresponse.php"),
+              scheme: "https",
+              host: "882f-102-217-7-30.in.ngrok.io",
+              path: "/vege_food/includes/mpesaresponse.php"
+          ),
           accountReference: "VegeFood",
           phoneNumber: userPhone,
           baseUri: Uri(scheme: "https", host: "sandbox.safaricom.co.ke"),
