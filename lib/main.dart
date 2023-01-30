@@ -7,8 +7,8 @@ import 'package:vege_food/config/colorMap.dart';
 import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/screens/navbar_screen.dart';
 void main() {
-  MpesaFlutterPlugin.setConsumerKey("Nh8dkP49vYJF07ODmJhCw5fajPHU16Ol");
-  MpesaFlutterPlugin.setConsumerSecret("JjXYa0ptrT3IWabG");
+  MpesaFlutterPlugin.setConsumerKey("5jpndTisvjXvfJ5uMgM65wRKxB0G80qT");
+  MpesaFlutterPlugin.setConsumerSecret("XvFgs2YxL2wp02EX");
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Palette.primaryColor, // navigation bar color
