@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:vege_food/Assistants/assistantMethods.dart';
+import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/orderItem.dart';
 import 'package:vege_food/Models/orders.dart';
@@ -283,12 +285,23 @@ class _ViewOrderState extends State<ViewOrder> {
             ),
             widget.order.payment_id != null && widget.order.payment_id != ""?SizedBox.shrink():InkWell(
               onTap: () async{
-                var res = await Navigator.push(context, PageTransition(
-                  child: MpesaPayment(userphone: "254706209779", orderid: widget.order.order_refno!.toUpperCase(), amount: double.parse(getTotalOrderAmount(widget.item),),), type: PageTransitionType.rightToLeft));
-                  if(res != null){
-                    AssistantMethods.getUserOrderItems(context, await getUserId());
+                if(Provider.of<AppData>(context).user!.user_phone != null && Provider.of<AppData>(context).user!.user_phone != "") {
+                  var res = await Navigator.push(context, PageTransition(
+                      child: MpesaPayment(
+                        userphone: "254${Provider.of<AppData>(context).user!.user_phone!.length>9?
+                        Provider.of<AppData>(context).user!.user_phone!.substring(1):
+                        Provider.of<AppData>(context).user!.user_phone}", orderid: widget.order
+                          .order_refno!.toUpperCase(), amount: double.parse(
+                        getTotalOrderAmount(widget.item),),),
+                      type: PageTransitionType.rightToLeft));
+                  if (res != null) {
+                    AssistantMethods.getUserOrderItems(
+                        context, await getUserId());
                     Navigator.pop(context);
                   }
+                }else{
+                  displayToastMessage("Please add payment number to your account", context);
+                }
                 },
               child: Container(
                 width: (MediaQuery.of(context).size.width) - 24,
