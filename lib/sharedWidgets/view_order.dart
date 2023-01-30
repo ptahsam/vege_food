@@ -13,6 +13,7 @@ import 'package:vege_food/DataHandler/appdata.dart';
 import 'package:vege_food/Models/apiConstants.dart';
 import 'package:vege_food/Models/orderItem.dart';
 import 'package:vege_food/Models/orders.dart';
+import 'package:vege_food/Models/user.dart';
 import 'package:vege_food/config/config.dart';
 import 'package:vege_food/config/palette.dart';
 import 'package:vege_food/sharedWidgets/widgets.dart';
@@ -33,6 +34,7 @@ class ViewOrder extends StatefulWidget {
 class _ViewOrderState extends State<ViewOrder> {
   @override
   Widget build(BuildContext context) {
+    User? user = Provider.of<AppData>(context).user != null?Provider.of<AppData>(context).user!:null;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -285,12 +287,12 @@ class _ViewOrderState extends State<ViewOrder> {
             ),
             widget.order.payment_id != null && widget.order.payment_id != ""?SizedBox.shrink():InkWell(
               onTap: () async{
-                if(Provider.of<AppData>(context).user!.user_phone != null && Provider.of<AppData>(context).user!.user_phone != "") {
+                if(user!.user_phone != null && user.user_phone != "") {
                   var res = await Navigator.push(context, PageTransition(
                       child: MpesaPayment(
-                        userphone: "254${Provider.of<AppData>(context).user!.user_phone!.length>9?
-                        Provider.of<AppData>(context).user!.user_phone!.substring(1):
-                        Provider.of<AppData>(context).user!.user_phone}", orderid: widget.order
+                        userphone: "254${user.user_phone!.length>9?
+                        user.user_phone!.substring(1):
+                        user.user_phone}", orderid: widget.order
                           .order_refno!.toUpperCase(), amount: double.parse(
                         getTotalOrderAmount(widget.item),),),
                       type: PageTransitionType.rightToLeft));
