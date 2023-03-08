@@ -23,6 +23,8 @@ In this app users will be able to search for grocery items that they need, add i
 
 #### 4.Order Page
 ![Image](https://user-images.githubusercontent.com/111053185/223672026-56ee7706-6f1f-4936-8d1f-4a1318ae49c2.png)
+
+#### 4.View Order Page
 ![Image](https://user-images.githubusercontent.com/111053185/223672022-f93ae8b4-c81e-46a0-ab9f-d18d29d8eeba.png)
 ![Image](https://user-images.githubusercontent.com/111053185/223672025-7fe65c5a-823a-46c2-8ecd-04bb206ca767.png)
 ![Image](https://user-images.githubusercontent.com/111053185/223672027-6066eb9a-8fa8-4654-bbec-ca68a7ac9538.png)
