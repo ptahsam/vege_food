@@ -13,7 +13,7 @@ In this app users will be able to search for grocery items that they need, add i
 
 ### 3.Project Screenshots
 #### 1.Home Page
-![alt|500](https://user-images.githubusercontent.com/111053185/223672030-019fd1d5-cf25-4edf-ad5b-9858d74aa6a1.png)
+![alt|100](https://user-images.githubusercontent.com/111053185/223672030-019fd1d5-cf25-4edf-ad5b-9858d74aa6a1.png)
 
 #### 2.Category Page
 ![Image](https://user-images.githubusercontent.com/111053185/223672024-3ed9780b-a3f0-426d-a7ed-cfc757d7d36a.png)
