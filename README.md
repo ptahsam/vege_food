@@ -14,7 +14,7 @@ In this app users will be able to search for grocery items that they need, add i
 ### 3.Project Screenshots
 #### 1.Home Page
 <!--![Image](https://user-images.githubusercontent.com/111053185/223672030-019fd1d5-cf25-4edf-ad5b-9858d74aa6a1.png|width=100px)-->
-<img src="https://user-images.githubusercontent.com/111053185/223672030-019fd1d5-cf25-4edf-ad5b-9858d74aa6a1.png" width="150" height="300">
+<img src="https://user-images.githubusercontent.com/111053185/223672030-019fd1d5-cf25-4edf-ad5b-9858d74aa6a1.png" width="300" height="600">
 
 #### 2.Category Page
 ![Image](https://user-images.githubusercontent.com/111053185/223672024-3ed9780b-a3f0-426d-a7ed-cfc757d7d36a.png|width=100px)
